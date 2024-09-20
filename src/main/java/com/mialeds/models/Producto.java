@@ -1,5 +1,6 @@
 package com.mialeds.models;
 
+//importar las clases de jakarta persistence para mapear la clase a la base de datos
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -36,6 +37,14 @@ public class Producto {
 
     public Producto(int idProducto, String nombre, String presentacion, int cantidadExistente, int precioCompra, int precioVenta) {
         this.idProducto = idProducto;
+        this.nombre = nombre;
+        this.presentacion = presentacion;
+        this.cantidadExistente = cantidadExistente;
+        this.precioCompra = precioCompra;
+        this.precioVenta = precioVenta;
+    }
+     //constructor para crear un producto sin id
+    public Producto(String nombre, String presentacion, int cantidadExistente, int precioCompra, int precioVenta) {
         this.nombre = nombre;
         this.presentacion = presentacion;
         this.cantidadExistente = cantidadExistente;

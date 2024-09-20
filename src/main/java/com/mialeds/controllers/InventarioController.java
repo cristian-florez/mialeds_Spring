@@ -1,5 +1,6 @@
 package com.mialeds.controllers;
 
+//importar la clase de spring framework para inyeccion de dependencias y controladores 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -7,13 +8,15 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+//importar la clase Model de spring framework para pasar datos a la vista
 import com.mialeds.services.ProductoService;
 
+//importar la clase Model de spring framework para pasar datos a la vista
 import org.springframework.ui.Model;
 
 
-@Controller
-@RequestMapping("/inventario")
+@Controller//anotacion para indicar que es un controlador esta clase
+@RequestMapping("/inventario")//anotacion para indicar la ruta de acceso a este controlador
 public class InventarioController {
 
     @Autowired
