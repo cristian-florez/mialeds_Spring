@@ -3,8 +3,12 @@ package com.mialeds.controllers;
 //importar la clase de spring framework para inyeccion de dependencias y controladores 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -13,6 +17,9 @@ import com.mialeds.services.ProductoService;
 
 //importar la clase Model de spring framework para pasar datos a la vista
 import org.springframework.ui.Model;
+
+//importar la clase Producto
+import com.mialeds.models.Producto;
 
 
 @Controller//anotacion para indicar que es un controlador esta clase
@@ -45,19 +52,17 @@ public class InventarioController {
     }
 
 
-    @PostMapping("/editar")
-    public String editarProducto(
-            @RequestParam("id_editar") int id, 
-            @RequestParam("nombre_editar") String nombre, 
-            @RequestParam("presentacion_editar") String presentacion, 
-            @RequestParam("precio_compra_editar") int precioCompra, 
-            @RequestParam("precio_venta_editar") int precioVenta,
-            @RequestParam("cantidad_editar") int cantidad,
-            Model model) {
+@PutMapping("/editar")
+public String editarProducto(@RequestParam("id_editar") int id, 
+                             @RequestParam("nombre_editar") String nombre,
+                             @RequestParam("presentacion_editar") String presentacion,
+                             @RequestParam("precio_compra_editar") int precioCompra,
+                             @RequestParam("precio_venta_editar") int precioVenta,
+                             @RequestParam("cantidad_editar") int cantidad) {
 
-            productoService.actualizar(id, nombre, presentacion, precioCompra, precioVenta, cantidad);
-            return "redirect:/inventario/listar";
-    }
+    productoService.actualizar(id, nombre, presentacion, precioCompra, precioVenta, cantidad);
+    return "redirect:/inventario/listar";
+}
 
     
     @PostMapping("/nuevo")
@@ -73,13 +78,13 @@ public class InventarioController {
             return "redirect:/inventario/listar";
     }
 
-    @PostMapping("/eliminar")
+    @DeleteMapping("/eliminar")
     public String eliminarProducto(@RequestParam("id_eliminar") int id, Model model) {
         productoService.eliminar(id);
         return "redirect:/inventario/listar";
     }
 
-    @PostMapping("/movimiento")
+    @PutMapping("/movimiento")
     public String movimientoProducto(
             @RequestParam("id_movimiento") int id, 
             @RequestParam("cantidad_movimiento") int cantidad, 

@@ -107,6 +107,7 @@
                         <div class="col s12">
                             <!-- Formulario para registrar el movimiento -->
                             <form th:action="@{/inventario/movimiento}" method="POST">
+                                <input type="hidden" name="_method" value="PUT">
                                 <!-- Campo oculto para el ID del movimiento -->
                                 <div class="input-field">
                                     <input type="hidden" name="id_movimiento">
@@ -156,6 +157,7 @@
                         <div class="col s12">
                             <!-- Formulario para editar el producto -->
                             <form th:action="@{/inventario/editar}" method="POST">
+                                <input type="hidden" name="_method" value="PUT">
                                 <!-- Campo oculto para el ID del producto a editar -->
                                 <div class="input-field">
                                     <input type="hidden" name="id_editar">
@@ -264,6 +266,7 @@
                         <div class="col s12">
                             <!-- Formulario para eliminar el producto -->
                             <form th:action="@{/inventario/eliminar}" method="POST">
+                                <input type="hidden" name="_method" value="DELETE">
                                 <!-- Campo oculto para el ID del producto a eliminar -->
                                 <div class="input-field">
                                     <input type="hidden" name="id_eliminar">
