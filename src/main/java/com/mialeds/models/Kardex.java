@@ -48,6 +48,13 @@ public class Kardex {
         this.fecha = fecha;
         this.cantidad = cantidad;
     }
+    public Kardex(Producto producto, Usuario usuario, String movimiento, LocalDate fecha, int cantidad) {
+        this.producto = producto;
+        this.usuario = usuario;
+        this.movimiento = movimiento;
+        this.fecha = fecha;
+        this.cantidad = cantidad;
+    }
 
     public int getIdKardex() {
         return idKardex;

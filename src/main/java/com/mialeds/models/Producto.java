@@ -1,11 +1,15 @@
 package com.mialeds.models;
 
+import java.util.List;
+
 //importar las clases de jakarta persistence para mapear la clase a la base de datos
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 @Entity
@@ -31,6 +35,9 @@ public class Producto {
 
     @Column(name = "precio_venta", nullable = false, precision = 10, scale = 2)
     private int precioVenta;
+
+    @OneToMany(mappedBy = "producto", cascade = CascadeType.REMOVE)
+    private List<Kardex> kardexes;
 
     public Producto() {
     }
@@ -98,6 +105,14 @@ public class Producto {
 
     public void setPrecioVenta(int precioVenta) {
         this.precioVenta = precioVenta;
+    }
+
+    public List<Kardex> getKardexes() {
+        return kardexes;
+    }
+
+    public void setKardexes(List<Kardex> kardexes) {
+        this.kardexes = kardexes;
     }
 
 }

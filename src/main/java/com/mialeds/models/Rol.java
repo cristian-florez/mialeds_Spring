@@ -1,10 +1,13 @@
 package com.mialeds.models;
 
+import java.util.List;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 @Entity
@@ -18,6 +21,9 @@ public class Rol {
 
     @Column(name = "nombre_rol", nullable = false, length = 45, unique = true)
     private String nombreRol;
+
+    @OneToMany(mappedBy = "rol")
+    private List<Usuario> usuarios;
 
     public Rol() {
     }

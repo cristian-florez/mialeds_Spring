@@ -11,7 +11,7 @@
     </head>
 <body>
 
-    <div th:replace="fragments/menu :: header"></div>
+    <div th:replace="~{fragments/menu :: header}"></div>
 
     <main class="main">
         <!--recuadro de botones principales-->
@@ -68,7 +68,6 @@
                                         <!-- Mostrar cantidad existente del producto -->
                                         <td th:text="${pro.cantidadExistente}"></td>
                                     </tr>
-                                </c:forEach>
                             </tbody>
                         </table>
                     </div>
@@ -81,12 +80,12 @@
                 <!--ingreso, salida y nuevos productos-->
                 <div class="col s5 m2 cuadro_botones_opciones">
                     <div class="col s12">
-                        <a class="btn modal-trigger grey crud" href="#buscar_entradas">
+                        <a class="btn modal-trigger red crud" href="#buscar_entradas">
                             registro entradas
                         </a>   
                     </div>
                     <div class="col s12">
-                        <a class="btn modal-trigger grey crud" href="#buscar_salidas">
+                        <a class="btn modal-trigger red crud" href="#buscar_salidas">
                             registro salidas
                         </a>
                     </div>
@@ -107,7 +106,6 @@
                         <div class="col s12">
                             <!-- Formulario para registrar el movimiento -->
                             <form th:action="@{/inventario/movimiento}" method="POST">
-                                <input type="hidden" name="_method" value="PUT">
                                 <!-- Campo oculto para el ID del movimiento -->
                                 <div class="input-field">
                                     <input type="hidden" name="id_movimiento">
@@ -132,7 +130,7 @@
                                 </div>
                                 <!-- Campo para seleccionar la fecha del movimiento -->
                                 <div class="input-field col s6 m4">
-                                    <input type="date" data-position="bottom">
+                                    <input type="date" id="fecha_movimiento" name="fecha_movimiento" data-position="bottom">
                                 </div>
                                 <!-- Espacio para ajuste del diseño -->
                                 <div class="col s12"></div>
@@ -285,21 +283,15 @@
                 <!--buscar registros de entradas de productos-->
                 <div id="buscar_entradas" class="modal center-align">
                     <div class="modal-content white">
-                        <h5 class="red-text">Buscar registros de entradas de productos</h5>
-                        <div class="col s12">
-                            <div class="input-field col s7 m5 buscador">
-                                <input type="text" id="buscar_registro_entrada" class="autocomplete">
-                                <label for="buscar_registro_entrada">
-                                    Producto
-                                </label>
-                            </div> 
-                            <div class="input-field col s5 m4">
-                                <input type="date" data-position="bottom">
-                            </div>
-                            <div class="modal-footer cuadro_botones_1_registros col s12 m3 white">
-                              <a href="#!" class="modal-close waves-effect waves-flat btn-flat green white-text">Buscar</a>
-                            </div>
+                        <div class=" col s1">
+                            <a href="#!" class="modal-close waves-effect waves-flat  btn-flat red-text white">
+                                <i class="material-icons ">cancel</i>
+                            </a>
                         </div>
+                        <div class="col s11">
+                            <h5 class="red-text">Registros de entradas de productos</h5>
+                        </div>
+                        <div class="col s12">
                         <table class="centered">
                             <thead>
                                 <tr>
@@ -310,39 +302,34 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <td>terpel 2T</td>
-                                    <td>sachet</td>
-                                    <td>15</td>
-                                    <td>20/05/2024</td>
-                                </tr>       
+                                <tr th:each="entradaKardex : ${kardexE}">
+                                    <!-- Mostrar nombre del producto -->
+                                    <td th:text="${entradaKardex.producto.nombre}"></td>
+                                    <!-- Mostrar presentación del producto -->
+                                    <td th:text="${entradaKardex.producto.presentacion}"></td>
+                                    <!-- Mostrar cantidad existente del producto -->
+                                    <td th:text="${entradaKardex.cantidad}"></td>
+                                    <td th:text="${entradaKardex.fecha}"></td>
+                                </tr>     
                             </tbody>
                         </table>
                       </div>
-                      <div class="modal-footer cuadro_botones_1">
-                        <a href="#!" class="modal-close waves-effect waves-flat  btn-flat red white-text">cerrar</a>
-                      </div>
+                    </div>
                 </div>
 
                 <!--buscar registro de salida de registros-->
 
                 <div id="buscar_salidas" class="modal center-align">
                     <div class="modal-content white">
-                        <h5 class="red-text">Buscar registros de salidas de productos</h5>
-                        <div class="col s12">
-                            <div class="input-field col s7 m5 buscador ">
-                                <input type="text" id="buscar_registro_salida" class="autocomplete">
-                                <label for="buscar_registro_salida">
-                                    Producto
-                                </label>
-                            </div> 
-                            <div class="input-field col s5 m4">
-                                <input type="date" data-position="bottom">
-                            </div>
-                            <div class="modal-footer cuadro_botones_1_registros col s12 m3 white">
-                              <a href="#!" class="modal-close waves-effect waves-flat btn-flat green white-text">Buscar</a>
-                            </div>
+                        <div class=" col s1">
+                            <a href="#!" class="modal-close waves-effect waves-flat  btn-flat red-text white">
+                                <i class="material-icons ">cancel</i>
+                            </a>
                         </div>
+                        <div class="col s11">
+                            <h5 class="red-text">Registros de salidas de productos</h5>
+                        </div>
+                        <div class="col s12">
                         <table class="centered">
                             <thead>
                                 <tr>
@@ -353,20 +340,20 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <td>terpel 2T</td>
-                                    <td>sachet</td>
-                                    <td>1</td>
-                                    <td>22/05/2024</td>
+                                <tr th:each="salidaKardex : ${kardexS}">
+                                    <!-- Mostrar nombre del producto -->
+                                    <td th:text="${salidaKardex.producto.nombre}"></td>
+                                    <!-- Mostrar presentación del producto -->
+                                    <td th:text="${salidaKardex.producto.presentacion}"></td>
+                                    <!-- Mostrar cantidad existente del producto -->
+                                    <td th:text="${salidaKardex.cantidad}"></td>
+                                    <td th:text="${salidaKardex.fecha}"></td>
                                 </tr>      
                             </tbody>
                         </table>
-                      </div>
-                      <div class="modal-footer cuadro_botones_1">
-                        <a href="#!" class="modal-close waves-effect waves-flat  btn-flat red white-text">cerrar</a>
-                      </div>
+                        </div>
+                    </div>
                 </div>
-            </div>
         </div>   
         <!-- Tabla de productos -->
         <div>
@@ -451,13 +438,13 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
     <script th:src="@{/js/script.js}"></script>
     <script th:src="@{/js/configInventario.js}"></script>
-    <script>
-    document.addEventListener('DOMContentLoaded', function() {
-        var elems = document.querySelectorAll('.modal');
-        var instances = M.Modal.init(elems);
-
-    });
-</script>
+    <!-- mostrar mensajes de error -->
+    <script th:if="${error}">
+        document.addEventListener('DOMContentLoaded', function() {
+            M.toast({html: '<span th:text="${error}"></span>', classes: 'red'});
+        });
+        console.log('Error: [[${error}]]');
+    </script>
 
 </body>
 </html>

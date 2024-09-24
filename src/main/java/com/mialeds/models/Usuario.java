@@ -1,5 +1,7 @@
 package com.mialeds.models;
 
+import java.util.List;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -7,6 +9,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 @Entity
@@ -36,6 +39,9 @@ public class Usuario {
     @ManyToOne
     @JoinColumn(name = "id_rol", nullable = false)
     private Rol rol;
+    
+    @OneToMany(mappedBy = "usuario")
+    private List<Kardex> kardexes;
 
     public Usuario() {
     }
@@ -104,6 +110,14 @@ public class Usuario {
 
     public void setRol(Rol rol) {
         this.rol = rol;
+    }
+
+    public List<Kardex> getKardexes() {
+        return kardexes;
+    }
+
+    public void setKardexes(List<Kardex> kardexes) {
+        this.kardexes = kardexes;
     }
     
 }
