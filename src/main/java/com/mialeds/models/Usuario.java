@@ -2,6 +2,8 @@ package com.mialeds.models;
 
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -40,8 +42,13 @@ public class Usuario {
     @JoinColumn(name = "id_rol", nullable = false)
     private Rol rol;
     
+    @JsonIgnore
     @OneToMany(mappedBy = "usuario")
     private List<Kardex> kardexes;
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "usuario")
+    private List<Venta> ventas;
 
     public Usuario() {
     }
@@ -118,6 +125,10 @@ public class Usuario {
 
     public void setKardexes(List<Kardex> kardexes) {
         this.kardexes = kardexes;
+    }
+
+    public List<Venta> getVentas() {
+        return ventas;
     }
     
 }

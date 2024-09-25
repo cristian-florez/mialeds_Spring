@@ -24,20 +24,31 @@ public class Venta {
     @JoinColumn(name = "id_usuario", nullable = false)
     private Usuario usuario;
 
+    @ManyToOne
+    @JoinColumn(name = "id_producto", nullable = false)
+    private Producto producto;
+
     @Column(name = "fecha", nullable = false)
     private LocalDate fecha;
+
+    @Column(name = "cantidad", nullable = false)
+    private int cantidad;
 
     @Column(name = "total_venta", nullable = false, precision = 10, scale = 2)
     private int totalVenta;
 
 
+
+
     public Venta() {
     }
 
-    public Venta(int idVenta, Usuario usuario, LocalDate fecha, int totalVenta) {
+    public Venta(int idVenta,Usuario usuario,Producto producto, LocalDate fecha, int cantidad, int totalVenta) {
         this.idVenta = idVenta;
         this.usuario = usuario;
+        this.producto = producto;
         this.fecha = fecha;
+        this.cantidad = cantidad;
         this.totalVenta = totalVenta;
     }
 
@@ -57,12 +68,28 @@ public class Venta {
         this.usuario = usuario;
     }
 
+    public Producto getProducto() {
+        return producto;
+    }
+
+    public void setProducto(Producto producto) {
+        this.producto = producto;
+    }
+
     public LocalDate getFecha() {
         return fecha;
     }
 
     public void setFecha(LocalDate fecha) {
         this.fecha = fecha;
+    }
+
+    public int getCantidad() {
+        return cantidad;
+    }
+
+    public void setCantidad(int cantidad) {
+        this.cantidad = cantidad;
     }
 
     public int getTotalVenta() {

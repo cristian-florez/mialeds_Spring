@@ -29,4 +29,9 @@ public interface ProductoRepository extends JpaRepository<Producto, Integer> {
     /*metodo para buscar todos los productos ordenados por nombre, Order By 
     es una palabra clave de SQL para ordenar los datos por un atributo y en que direccion*/
     List<Producto> findAllByOrderByNombreAsc();
+
+    /*metodo para buscar productos por nombre y presentacion utilizado para el AJAX de la vista 
+    ventas para buscar productos para registrar las ventas*/
+    @Query("SELECT p.nombre, p.presentacion, p.precioVenta FROM Producto p")
+    List<Object[]> findNombreAndPresentacion();
 }
