@@ -42,59 +42,38 @@
                     <h1 class="flow-text">Estación de gasolina Ulloa</h1>
                     <h3 class="flow-text">Iniciar sesión</h3>
                     <div class="container center-align">
-                        <form name="iniciar_sesion" method="POST" th:action="@{/principal}">
+                        <div th:if="${error}" class="error-message red-text">
+                            <p th:text="${error}"></p>
+                        </div>
+                        <!-- Formulario que envía la petición de autenticación -->
+                        <form name="iniciar_sesion" id="loginForm" method="post" th:action="@{/api/auth/authenticate}">
                             <!-- Campo de usuario -->
                             <div class="input-field col s12">
-                                <input type="text" id="usuario" name="txtCedula" maxlength="12" class="validate" required>
+                                <input type="text" id="usuario" name="cedula" maxlength="12" class="validate" required>
                                 <label for="usuario">
-                                    <i class="tiny material-icons">account_circle</i> Usuario 
+                                    <i class="tiny material-icons">account_circle</i> Cédula
                                 </label>
                             </div>
                             <!-- Campo de contraseña -->
                             <div class="input-field col s12">
-                                <input type="password" id="contrasena" name="txtContrasena" class="validate" required>
+                                <input type="password" id="contrasena" name="contrasena" class="validate" required>
                                 <label for="contrasena">
                                     <i class="tiny material-icons">lock</i> Contraseña
                                 </label>
                             </div>
                             <!-- Botón de inicio de sesión -->
                             <div>
-                                <button class="waves-effect waves-light btn red" type="submit" name="accion" value="ingresar">Ingresar</button>
+                                <button class="waves-effect waves-light btn red" type="submit">Ingresar</button>
                             </div>
                         </form>
+                        
+                                             
                         <!-- Enlace para olvidar contraseña -->
                         <a class="waves-effect waves-light btn-flat modal-trigger red-text" href="#olvide_clave">Olvidé mi contraseña</a>
-                        
-                        <!-- Modal para olvidar contraseña -->
-                        <div id="olvide_clave" class="modal">
-                          <div class="modal-content m8">
-                            <h4 class="flow-text">Olvidé mi contraseña</h4>
-                            <form name="olvide_clave" method="get">
-                                <!-- Campo de nombre de usuario -->
-                                <div class="input-field">
-                                    <input type="text" id="nombre_olvide_clave" maxlength="12" class="validate" required>
-                                    <label for="nombre_olvide_clave">
-                                        <i class="tiny material-icons">account_circle</i> Nombre usuario 
-                                    </label>
-                                </div>
-                                <!-- Campo de número de identificación -->
-                                <div class="input-field">
-                                    <input type="text" id="identificacion_usuario_olvide_clave" class="validate" required>
-                                    <label for="identificacion_usuario_olvide_clave">
-                                        <i class="tiny material-icons">badge</i> Número de identificación
-                                    </label>
-                                </div>
-                            </form>
-                          </div>
-                          <!-- Botones del modal -->
-                          <div class="modal-footer col m12 cuadro_botones_2 center-align">
-                            <a href="#!" class="modal-close waves-effect waves-flat btn-flat green white-text col m3">Confirmar</a>
-                            <a href="#!" class="modal-close waves-effect waves-flat btn-flat red white-text col m3">Cancelar</a>
-                          </div>
-                        </div>
                     </div>
                 </div>
             </div>
+
         </div> 
     </main>
 
@@ -106,5 +85,7 @@
     <!-- Scripts de JavaScript -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script> <!-- Materialize JS -->
     <script th:src="@{/js/script.js}"></script> <!-- Script personalizado -->
+
+    
 </body>
 </html>

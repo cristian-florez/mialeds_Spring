@@ -1,20 +1,28 @@
 package com.mialeds.models;
 
+import java.util.Collection;
 import java.util.List;
+
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
+
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import lombok.Builder;
 
 @Entity
+@Builder
 @Table(name = "usuario")
-public class Usuario {
+public class Usuario implements UserDetails{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -36,9 +44,8 @@ public class Usuario {
     @Column(name = "telefono", nullable = false, length = 10)
     private String telefono;
 
-    @ManyToOne
-    @JoinColumn(name = "id_rol", nullable = false)
-    private Rol rol;
+    @Enumerated(EnumType.ORDINAL)
+    private Role role;
     
     @OneToMany(mappedBy = "usuario")
     private List<Kardex> kardexes;
@@ -46,14 +53,15 @@ public class Usuario {
     public Usuario() {
     }
 
-    public Usuario(int idUsuario,String nombre, String cedula, String contrasena, String correoElectronico, String telefono, Rol rol) {
+    public Usuario(int idUsuario, String nombre, String cedula, String contrasena, String correoElectronico, String telefono, Role role, List<Kardex> kardexes) {
         this.idUsuario = idUsuario;
         this.nombre = nombre;
         this.cedula = cedula;
         this.contrasena = contrasena;
         this.correoElectronico = correoElectronico;
         this.telefono = telefono;
-        this.rol = rol;
+        this.role = role;
+        this.kardexes = kardexes;
     }
 
     public int getIdUsuario() {
@@ -104,12 +112,12 @@ public class Usuario {
         this.telefono = telefono;
     }
 
-    public Rol getRol() {
-        return rol;
+    public Role getRole() {
+        return role;
     }
 
-    public void setRol(Rol rol) {
-        this.rol = rol;
+    public void setRole(Role role) {
+        this.role = role;
     }
 
     public List<Kardex> getKardexes() {
@@ -118,6 +126,41 @@ public class Usuario {
 
     public void setKardexes(List<Kardex> kardexes) {
         this.kardexes = kardexes;
+    }
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+    return List.of(new SimpleGrantedAuthority(role.name()));
+    }
+
+    @Override
+    public String getPassword() {
+        return contrasena;
+    }
+
+    @Override
+    public String getUsername() {
+        return cedula;
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return true;
     }
     
 }
