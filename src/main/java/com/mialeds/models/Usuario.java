@@ -1,14 +1,16 @@
 package com.mialeds.models;
 
 import java.util.List;
+import java.util.ArrayList;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
@@ -36,24 +38,21 @@ public class Usuario {
     @Column(name = "telefono", nullable = false, length = 10)
     private String telefono;
 
-    @ManyToOne
-    @JoinColumn(name = "id_rol", nullable = false)
-    private Rol rol;
+    @Column(name = "estado", nullable = false)
+    private Boolean estado;
+
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn(name = "usuario_id")
+    private List<Rol> roles;
     
     @OneToMany(mappedBy = "usuario")
     private List<Kardex> kardexes;
 
-    public Usuario() {
-    }
 
-    public Usuario(int idUsuario,String nombre, String cedula, String contrasena, String correoElectronico, String telefono, Rol rol) {
-        this.idUsuario = idUsuario;
-        this.nombre = nombre;
-        this.cedula = cedula;
-        this.contrasena = contrasena;
-        this.correoElectronico = correoElectronico;
-        this.telefono = telefono;
-        this.rol = rol;
+    public Usuario(){
+        super();
+        roles = new ArrayList<Rol>();
+        estado = true;
     }
 
     public int getIdUsuario() {
@@ -104,12 +103,20 @@ public class Usuario {
         this.telefono = telefono;
     }
 
-    public Rol getRol() {
-        return rol;
+    public Boolean getEstado() {
+        return estado;
     }
 
-    public void setRol(Rol rol) {
-        this.rol = rol;
+    public void setEstado(Boolean estado) {
+        this.estado = estado;
+    }
+
+    public List<Rol> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(List<Rol> roles) {
+        this.roles = roles;
     }
 
     public List<Kardex> getKardexes() {

@@ -5,7 +5,9 @@ import org.springframework.stereotype.Repository;
 
 import com.mialeds.models.Usuario;
 
+
 @Repository
 public interface UsuarioRepository extends JpaRepository <Usuario, Integer> {
 
+    public Usuario findByCedula(String cedula);
 }
