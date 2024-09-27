@@ -1,8 +1,10 @@
 package com.mialeds.services;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.mialeds.models.Usuario;
@@ -16,6 +18,9 @@ public class UsuarioService {
 
     @Autowired
     private UsuarioRepository usuarioRepository;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     private final Logger logger = LoggerFactory.getLogger(UsuarioService.class);
 
@@ -31,6 +36,25 @@ public class UsuarioService {
     public Usuario buscarPorId(int id) {
         try {
             return usuarioRepository.findById(id).orElse(null);
+        } catch (Exception e) {
+            logger.error("Error al buscar el usuario: " + e.getMessage());
+            return null;
+        }
+    }
+
+    public Usuario crearUsuario(Usuario usuario) {
+        try {
+            usuario.setContrasena(passwordEncoder.encode(usuario.getContrasena()));
+            return usuarioRepository.save(usuario);
+        } catch (Exception e) {
+            logger.error("Error al crear el usuario: " + e.getMessage());
+            return null;
+        }
+    }
+
+    public Optional<Usuario> buscarPorCedula(String cedula) {
+        try {
+            return usuarioRepository.findByCedula(cedula);
         } catch (Exception e) {
             logger.error("Error al buscar el usuario: " + e.getMessage());
             return null;

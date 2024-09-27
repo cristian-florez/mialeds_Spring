@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Crear Usuario</title>
+</head>
+<body>
+    <h1>Crear Usuario</h1>
+
+    <form th:action="@{/usuarios/crear}" th:object="${usuario}" method="post">
+        <div>
+            <label for="nombre">Nombre:</label>
+            <input type="text" id="nombre" th:field="*{nombre}" required>
+        </div>
+
+        <div>
+            <label for="cedula">Cédula:</label>
+            <input type="text" id="cedula" th:field="*{cedula}" maxlength="10" required>
+        </div>
+
+        <div>
+            <label for="contrasena">Contraseña:</label>
+            <input type="password" id="contrasena" th:field="*{contrasena}" required>
+        </div>
+
+        <div>
+            <label for="correoElectronico">Correo Electrónico:</label>
+            <input type="email" id="correoElectronico" th:field="*{correoElectronico}" required>
+        </div>
+
+        <div>
+            <label for="telefono">Teléfono:</label>
+            <input type="text" id="telefono" th:field="*{telefono}" maxlength="10" required>
+        </div>
+
+        <div>
+            <label for="isEnabled">Usuario habilitado:</label>
+            <input type="checkbox" id="isEnabled" th:field="*{isEnabled}">
+        </div>
+
+        <div>
+            <label for="accountNoExpired">Cuenta no expirada:</label>
+            <input type="checkbox" id="accountNoExpired" th:field="*{accountNoExpired}">
+        </div>
+
+        <div>
+            <label for="accountNoLocked">Cuenta no bloqueada:</label>
+            <input type="checkbox" id="accountNoLocked" th:field="*{accountNoLocked}">
+        </div>
+
+        <div>
+            <label for="credentialNoExpired">Credenciales no expiradas:</label>
+            <input type="checkbox" id="credentialNoExpired" th:field="*{credentialNoExpired}">
+        </div>
+
+        <!-- Selección de roles -->
+        <div>
+            <label for="roles">Roles:</label>
+            <select id="roles" th:field="*{roles}" multiple>
+                <option th:each="role : ${roles}" th:value="${role}" th:text="${role.roleEnum}"></option>
+            </select>
+        </div>
+
+        <!-- Selección de permisos para cada rol -->
+        <div>
+            <label for="permisoList">Permisos:</label>
+            <select id="permisoList" th:field="*{roles[0].permisoList}" multiple>
+                <option th:each="permiso : ${permisos}" th:value="${permiso}" th:text="${permiso.nombrePermiso}"></option>
+            </select>
+        </div>
+
+        <button type="submit">Crear Usuario</button>
+    </form>
+</body>
+</html>

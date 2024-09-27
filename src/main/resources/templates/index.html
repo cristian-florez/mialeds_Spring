@@ -42,18 +42,18 @@
                     <h1 class="flow-text">Estación de gasolina Ulloa</h1>
                     <h3 class="flow-text">Iniciar sesión</h3>
                     <div class="container center-align">
-                        <form name="iniciar_sesion" method="POST" th:action="@{/principal}">
+                        <form name="iniciar_sesion" method="POST" th:action="@{/login}">
                             <!-- Campo de usuario -->
                             <div class="input-field col s12">
-                                <input type="text" id="usuario" name="txtCedula" maxlength="12" class="validate" required>
-                                <label for="usuario">
+                                <input type="text" id="username" name="username" maxlength="12" class="validate" required>
+                                <label for="username">
                                     <i class="tiny material-icons">account_circle</i> Usuario 
                                 </label>
                             </div>
                             <!-- Campo de contraseña -->
                             <div class="input-field col s12">
-                                <input type="password" id="contrasena" name="txtContrasena" class="validate" required>
-                                <label for="contrasena">
+                                <input type="password" id="password" name="password" class="validate" required>
+                                <label for="password">
                                     <i class="tiny material-icons">lock</i> Contraseña
                                 </label>
                             </div>

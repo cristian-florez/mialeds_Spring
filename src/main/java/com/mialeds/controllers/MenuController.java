@@ -26,4 +26,9 @@ public class MenuController {
     public String proveedores() {
         return "proveedores";
     }
+
+    @GetMapping("/logout")
+    public String logout() {
+        return "redirect:/login";
+    }
 }
