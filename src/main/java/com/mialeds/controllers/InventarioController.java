@@ -126,5 +126,4 @@ public class InventarioController {
         return "redirect:/inventario/listar";
     }
 
-    
 }

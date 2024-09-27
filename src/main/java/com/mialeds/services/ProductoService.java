@@ -154,4 +154,15 @@ public class ProductoService {
             return null;
         }
     }
+
+    /*este metodo retorna una lista de productos con nombre y presentacion
+    utilizado en la apirest para los productos de la venta*/
+    public List<Object[]> listarNombrePresentacion() {
+        try {
+            return productoRepository.findNombreAndPresentacion();
+        } catch (Exception e) {
+            logger.error("Error al buscar nombre y presentacion: " + e.getMessage());
+            return null;
+        }
+    }
 }

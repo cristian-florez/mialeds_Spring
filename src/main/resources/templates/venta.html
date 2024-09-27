@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>ventas</title>
+        <link rel="stylesheet" th:href="@{/css/style.css}">
+        <link rel="Icon" type="image/png" th:href="@{/images/logo_MIALEDS_pestaña.png}">
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    </head>
+<body>
+    <div th:replace="~{fragments/menu :: header}"></div>
+    <main class="main">
+        <div class="row">
+            <div class="col s12 botones_ventas">
+                <div class="cuadro_busqueda_ventas">
+                    <div class="col s12 m6">
+                        <div class="input-field col s5 m4">
+                            <input type="date" id="buscar" class="fecha tooltipped" data-position="bottom" data-tooltip="fecha inicio busqueda">
+                        </div>
+                        <div class="input-field col s5 m4">
+                            <input type="date" id="buscar" class="fecha tooltipped" data-position="bottom" data-tooltip="fecha final busqueda">
+                        </div>
+                        <div class="col s1 cuadro_botones_buscar_fecha">
+                            <button class="btn tooltipped boton_buscador_fecha" data-position="bottom" data-tooltip="buscar ventas" type="submit">
+                                <i class="material-icons red-text">search</i>
+                            </button>
+                        </div>
+                        <div class="input-field col s12 m8 buscador">
+                            <input type="text" id="buscar" class="autocomplete  tooltipped" data-position="bottom" data-tooltip="buscar productos">
+                            <label for="buscar">
+                                <i class="material-icons">search</i>
+                            </label>
+                        </div>
+                    </div>
+                    <div class="card col s12 m2 cuadro_total_ventas_principal">
+                        <div class="card-content total_ventas_precio">
+                            <span class="card-title tooltipped" data-position="bottom" data-tooltip="total ventas">
+                                <i class="material-icons red-text">attach_money</i>
+                                343.345
+                            </span>
+                        </div>
+                    </div>
+                    <div class="col m1"></div>
+                </div>
+                <div class="col s12 m2 cuadro_botones_1 boton_ventas">
+                    <!--registro entrada de productos-->
+                    <div class="col m12">
+                        <a class="btn modal-trigger red crud" href="#registrar_venta">
+                            registrar venta
+                        </a>   
+                    </div>
+                    <div id="registrar_venta" class="modal center-align" >
+                      <div class="modal-content white">
+                        <h5 class="red-text">Registrar ventas</h5>
+                        <div class="col s12">
+                            <div class="input-field col s12 m6 buscador">
+                                <input type="text" id="buscar_entrada" class="autocomplete" >
+                                <label for="buscar_entrada">
+                                    Producto
+                                </label>
+                            </div> 
+                            <div class="input-field col s6 m2">
+                                <input type="number" id="cantidad_entrada" class="autocomplete " data-position="bottom">
+                                <label for="cantidad_entrada">
+                                    cantidad
+                                </label>
+                            </div>
+                            <div class="input-field col s6 m4">
+                                <input type="date" data-position="bottom">
+                            </div>
+                            <div class="modal-footer cuadro_botones_1">
+                              <a href="#!" id="agregar_producto" class="modal-close waves-effect waves-flat btn-flat green white-text">Agregar</a>
+                            </div>
+                        </div>
+                        <table class="centered">
+                            <thead>
+                                <tr>
+                                    <th>Producto</th>
+                                    <th>Presentación</th>
+                                    <th>Cantidad</th>
+                                    <th>Total</th>
+                                    <th>Fecha</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>mobil 4t</td>
+                                    <td>litro</td>
+                                    <td>2</td>
+                                    <td>54000</td>
+                                    <td>23/06/2024</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <div class="col s12">
+                            <div class="col s4"></div>
+                            <div class="card cuadro_total_ventas_registro col s4">
+                                <div class="card-content">
+                                    <span class="card-title tooltipped" data-position="bottom" data-tooltip="total ventas">
+                                        <i class="material-icons red-text">attach_money</i>
+                                        343.345
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="col s4"></div>
+                        </div>
+
+                      </div>
+                      <div class="modal-footer cuadro_botones_2">
+                        <a href="#!" class="modal-close waves-effect waves-flat btn-flat green white-text col s4 m3">confirmar</a>
+                        <a href="#!" class="modal-close waves-effect waves-flat btn-flat red white-text col s4 m3">cancelar</a>
+                      </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div>
+            <table class="centered">
+                <thead>
+                    <tr>
+                        <th>Producto</th>
+                        <th>Presentación</th>
+                        <th>Precio</th>
+                        <th>Cantidad vendida</th>
+                        <th>Total venta</th>
+                        <th>
+                            <a class="dropdown-trigger btn tooltipped red-text boton_ajustes" data-position="bottom" data-tooltip="ajustes de ventas" href='#' data-target='settings'>
+                                <i class="tiny material-icons ">settings</i>
+                            </a>
+                            <ul id='settings' class='dropdown-content'>
+                                <br>
+                                <li><a href="#!">
+                                    <i class="material-icons">edit</i>Editar venta</a>
+                                </li>
+                                <li><a href="#!">
+                                    <i class="material-icons">delete</i>Eliminar venta</a>
+                                </li>
+                            </ul>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="venta : ${ventas}">
+                        <!-- Muestra los detalles del producto -->
+                        <td th:text="${venta.producto.nombre}"></td>
+                        <td th:text="${venta.producto.presentacion}"></td>
+                        <td th:text="${venta.producto.precioVenta}"></td>
+                        <td th:text="${venta.cantidad}"></td>
+                        <td th:text="${venta.totalVenta}"></td>
+                        <!-- Columna para acciones relacionadas con el producto -->
+                        <td>
+                            <!-- Enlace de opción con datos del producto (se muestra u oculta según sea necesario) -->
+                            <a class="btn red-text white opciones" 
+                               id="selector" 
+                               style="display: none;">
+                            </a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </main>
+    
+    <footer class="page-footer red">
+        <small>&copy; Derechos Reservados 2024</small>
+    </footer>
+    <script th:src="@{https://code.jquery.com/jquery-3.6.0.min.js}"></script>
+    <script th:src="@{https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js}"></script>
+    <script th:src="@{/js/script.js}"></script>
+    <script th:src="@{/js/configVentas.js}"></script>
+    
+    <!-- mostrar mensajes de error -->
+    <script th:if="${error}">
+        document.addEventListener('DOMContentLoaded', function() {
+            M.toast({html: '<span th:text="${error}"></span>', classes: 'red'});
+        });
+        console.log('Error: [[${error}]]');
+    </script>
+</body>
+</html>

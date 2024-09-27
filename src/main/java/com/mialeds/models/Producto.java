@@ -2,6 +2,8 @@ package com.mialeds.models;
 
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 //importar las clases de jakarta persistence para mapear la clase a la base de datos
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -36,8 +38,13 @@ public class Producto {
     @Column(name = "precio_venta", nullable = false, precision = 10, scale = 2)
     private int precioVenta;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "producto", cascade = CascadeType.REMOVE)
     private List<Kardex> kardexes;
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "producto", cascade = CascadeType.REMOVE)
+    private List<Venta> ventas;
 
     public Producto() {
     }
@@ -113,6 +120,14 @@ public class Producto {
 
     public void setKardexes(List<Kardex> kardexes) {
         this.kardexes = kardexes;
+    }
+
+    public List<Venta> getVentas() {
+        return ventas;
+    }
+
+    public void setVentaProductos(List<Venta> ventas) {
+        this.ventas = ventas;
     }
 
 }

@@ -6,7 +6,7 @@ import java.util.Set;
 
 import jakarta.persistence.*;
 import lombok.*;
-
+//tener en cuenta que el kardex le puede generar conflictos asi que tener el cuenta JsonIgnoreProperties
 @Setter
 @Getter
 @Builder
