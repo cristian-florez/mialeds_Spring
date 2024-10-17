@@ -42,6 +42,7 @@ public class UsuarioService {
         }
     }
 
+    // Este método crea un usuario en la base de datos, encriptando la contraseña
     public Usuario crearUsuario(Usuario usuario) {
         try {
             usuario.setContrasena(passwordEncoder.encode(usuario.getContrasena()));
@@ -52,6 +53,7 @@ public class UsuarioService {
         }
     }
 
+    // Este método retorna un usuario por su cédula, utilizado en Spring Security para la autenticación
     public Optional<Usuario> buscarPorCedula(String cedula) {
         try {
             return usuarioRepository.findByCedula(cedula);
@@ -59,6 +61,12 @@ public class UsuarioService {
             logger.error("Error al buscar el usuario: " + e.getMessage());
             return null;
         }
+    }
+
+    // Este método retorna el id de un usuario por su cédula, utilizado en ventas
+    public Integer obtenerIdPorCedula(String cedula) {
+        return usuarioRepository.findIdByCedula(cedula)
+                .orElseThrow(() -> new RuntimeException("Usuario no encontrado con cédula: " + cedula));
     }
 
 }

@@ -1,13 +1,8 @@
-//esta clase es un repositorio de datos que se encarga de interactuar con la base de datos
 package com.mialeds.repositories;
 
-//esta clase importa jpa repository para extender de esta clase y heredar metodos basicos
 import org.springframework.data.jpa.repository.JpaRepository;
-//esta clase importa query para poder hacer consultas personalizadas
 import org.springframework.data.jpa.repository.Query;
-//esta clase importa param para poder pasar parametros a las consultas personalizadas
 import org.springframework.data.repository.query.Param;
-//esta clase importa repository para indicar que es un repositorio de datos
 import org.springframework.stereotype.Repository;
 import java.util.List;
 
@@ -32,6 +27,6 @@ public interface ProductoRepository extends JpaRepository<Producto, Integer> {
 
     /*metodo para buscar productos por nombre y presentacion utilizado para el AJAX de la vista 
     ventas para buscar productos para registrar las ventas*/
-    @Query("SELECT p.nombre, p.presentacion, p.precioVenta FROM Producto p")
-    List<Object[]> findNombreAndPresentacion();
+    @Query("SELECT p.idProducto, p.nombre, p.presentacion FROM Producto p")
+    List<Object[]> findIdNombreAndPresentacion();
 }

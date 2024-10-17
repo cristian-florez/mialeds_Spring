@@ -108,6 +108,12 @@ main {
     margin:0 0px 8px !important;
 }
 
+.cuadro_botones_1 button{
+    text-align: center !important;
+    border-radius: 10px !important;
+    margin:0 0px 8px !important;
+}
+
 .cuadro_botones_2 a{
     text-align: center !important;
     border-radius: 10px !important;

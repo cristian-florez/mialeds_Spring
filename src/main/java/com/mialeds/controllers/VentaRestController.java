@@ -9,6 +9,7 @@ import com.mialeds.services.ProductoService;
 import java.util.List;
 
 //clase para generar una api para listar los productos en la vista de ventas
+//utilizado para el buscador de productos
 @RestController
 @RequestMapping("/api/venta")
 public class VentaRestController {
@@ -18,6 +19,6 @@ public class VentaRestController {
 
     @GetMapping("/listar")
     public List<Object[]> listarProductos() {
-        return productoService.listarNombrePresentacion();
+        return productoService.listarIdNombrePresentacion();
     }
 }

@@ -1,4 +1,6 @@
-// Espera a que el DOM esté completamente cargado antes de ejecutar el código
+/*este codigo tiene como proposito el de manejar la logica de los modales, teniendo en cuenta
+que al utilizar materialize genera errores al momento de enviar formularios dentro de modales, 
+con este codigo se soluciona ese problema aparte de ayudarnos a pasar datos a los inputs*/
 document.addEventListener('DOMContentLoaded', function() {
     
     // Selecciona todos los elementos 'a' dentro de 'li' con el id 'settings'
@@ -74,7 +76,6 @@ document.addEventListener('DOMContentLoaded', function() {
                             
                             // Llena el campo oculto del id a eliminar en el modal
                             document.querySelector('#eliminar_producto input[name="id_eliminar"]').value = idEliminar;     
-                            console.log(idEliminar);                       
                             
                             // Abre el modal de eliminación
                             modalEliminar.open();

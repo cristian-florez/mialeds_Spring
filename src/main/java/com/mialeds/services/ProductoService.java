@@ -79,7 +79,7 @@ public class ProductoService {
     /*este metodo guarda un producto en la base de datos, se utiliza
      en otros metodos de la clase para guardar o actualizar productos, 
      se decide crear el metodo para encapsular la logica de guardar un producto*/
-    private Producto guardar(Producto producto) {
+    protected Producto guardar(Producto producto) {
         try {
             return productoRepository.save(producto);
         } catch (Exception e) {
@@ -157,9 +157,9 @@ public class ProductoService {
 
     /*este metodo retorna una lista de productos con nombre y presentacion
     utilizado en la apirest para los productos de la venta*/
-    public List<Object[]> listarNombrePresentacion() {
+    public List<Object[]> listarIdNombrePresentacion() {
         try {
-            return productoRepository.findNombreAndPresentacion();
+            return productoRepository.findIdNombreAndPresentacion();
         } catch (Exception e) {
             logger.error("Error al buscar nombre y presentacion: " + e.getMessage());
             return null;
