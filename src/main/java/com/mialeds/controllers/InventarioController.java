@@ -1,6 +1,6 @@
 package com.mialeds.controllers;
 
-//importar la clase de spring framework para inyeccion de dependencias y controladores 
+// Importar las clases de Spring Framework para la inyección de dependencias y controladores
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -12,61 +12,65 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.mialeds.services.KardexService;
 import java.time.LocalDate;
-//importar la clase Model de spring framework para pasar datos a la vista
+// Importar la clase ProductoService para realizar operaciones relacionadas con productos
 import com.mialeds.services.ProductoService;
 
-//importar la clase Model de spring framework para pasar datos a la vista
+// Importar la clase Model de Spring Framework para pasar datos a la vista
 import org.springframework.ui.Model;
 
-
-@Controller//anotacion para indicar que es un controlador esta clase
-@RequestMapping("/inventario")//anotacion para indicar la ruta de acceso a este controlador
+@Controller // Anotación que indica que esta clase es un controlador
+@RequestMapping("/inventario") // Establece la ruta base para todas las solicitudes de este controlador
 public class InventarioController {
 
+    // Inyectar ProductoService para manejar operaciones de productos
     @Autowired
     private ProductoService productoService;
+
+    // Inyectar KardexService para manejar operaciones del kardex
     @Autowired
     private KardexService kardexService;
 
+    // Método para pasar la lista de productos escasos a la vista
     private void productosEscasos(Model model) {
         model.addAttribute("productosEsc", productoService.productosEscasos());
     }
 
+    // Método para pasar los movimientos de entrada y salida del kardex a la vista
     private void kardexE(Model model) {
         model.addAttribute("kardexE", kardexService.listarPorMovimiento("entrada"));
         model.addAttribute("kardexS", kardexService.listarPorMovimiento("salida"));
     }
 
+    // Método para listar todos los productos y mostrar la vista de inventario
     @GetMapping("/listar")
     public String listar(Model model) {
         try {
-            productosEscasos(model);
-            kardexE(model);
-            
-            model.addAttribute("productos", productoService.listar());
+            productosEscasos(model); // Añadir productos escasos al modelo
+            kardexE(model); // Añadir movimientos de kardex al modelo
+            model.addAttribute("productos", productoService.listar()); // Listar todos los productos
         } catch (Exception e) {
-            model.addAttribute("error", "error a listar los productos: " + e.getMessage());
+            model.addAttribute("error", "Error al listar los productos: " + e.getMessage());
         }
-        return "inventario";
+        return "inventario"; // Retorna la vista inventario
     }
 
+    // Método para buscar un producto por nombre
     @GetMapping("/buscar")
     public String buscarProducto(@RequestParam("producto") String nombre, Model model) {
         try {
             if (nombre == null || nombre.isEmpty()) {
-                return "redirect:/inventario/listar";  
+                return "redirect:/inventario/listar"; // Redirigir si el nombre está vacío
             } else {
-                model.addAttribute("productos", productoService.listarPorNombre(nombre));
-                productosEscasos(model);
+                model.addAttribute("productos", productoService.listarPorNombre(nombre)); // Buscar productos por nombre
+                productosEscasos(model); // Añadir productos escasos al modelo
             }
         } catch (Exception e) {
-            model.addAttribute("error", "error al buscar el producto: " + e.getMessage());
+            model.addAttribute("error", "Error al buscar el producto: " + e.getMessage());
         }
-
-        return "inventario";
+        return "inventario"; // Retorna la vista inventario
     }
 
-
+    // Método para editar un producto existente
     @PutMapping("/editar")
     public String editarProducto(@RequestParam("id_editar") int id, 
                                 @RequestParam("nombre_editar") String nombre,
@@ -76,14 +80,14 @@ public class InventarioController {
                                 @RequestParam("cantidad_editar") int cantidad,
                                 Model model) {
         try {
-            productoService.actualizar(id, nombre, presentacion, precioCompra, precioVenta, cantidad);
+            productoService.actualizar(id, nombre, presentacion, precioCompra, precioVenta, cantidad); // Actualizar el producto
         } catch (Exception e) {
-            model.addAttribute("error", "error al editar el producto: " + e.getMessage());
+            model.addAttribute("error", "Error al editar el producto: " + e.getMessage());
         }
-        return "redirect:/inventario/listar";
+        return "redirect:/inventario/listar"; // Redirigir a la lista de productos
     }
 
-    
+    // Método para crear un nuevo producto
     @PostMapping("/nuevo")
     public String crearProducto(
             @RequestParam("nombre_producto_nuevo") String nombre, 
@@ -93,23 +97,25 @@ public class InventarioController {
             @RequestParam("cantidad_nuevo") int cantidad,
             Model model) {
         try {
-            productoService.crear(nombre, presentacion, precioCompra, precioVenta, cantidad);
+            productoService.crear(nombre, presentacion, precioCompra, precioVenta, cantidad); // Crear un nuevo producto
         } catch (Exception e) {
-            model.addAttribute("error", "error al crear el producto: " + e.getMessage());
+            model.addAttribute("error", "Error al crear el producto: " + e.getMessage());
         }
-        return "redirect:/inventario/listar";
+        return "redirect:/inventario/listar"; // Redirigir a la lista de productos
     }
 
+    // Método para eliminar un producto
     @DeleteMapping("/eliminar")
     public String eliminarProducto(@RequestParam("id_eliminar") int id, Model model) {
         try {
-            productoService.eliminar(id);
+            productoService.eliminar(id); // Eliminar el producto por ID
         } catch (Exception e) {
-            model.addAttribute("error", "error al eliminar el producto: " + e.getMessage());
+            model.addAttribute("error", "Error al eliminar el producto: " + e.getMessage());
         }
-        return "redirect:/inventario/listar";
+        return "redirect:/inventario/listar"; // Redirigir a la lista de productos
     }
 
+    // Método para registrar un movimiento en el kardex (entrada o salida)
     @PostMapping("/movimiento")
     public String movimientoProducto(
             @RequestParam("id_movimiento") int id, 
@@ -118,12 +124,11 @@ public class InventarioController {
             @RequestParam("fecha_movimiento") String fecha,
             Model model) {
         try {
-            productoService.movimiento(id, cantidad, movimiento);
-            kardexService.crear(id, 2, movimiento,LocalDate.parse(fecha), cantidad);
+            productoService.movimiento(id, cantidad, movimiento); // Actualizar el producto según el movimiento
+            kardexService.crear(id, 2, movimiento, LocalDate.parse(fecha), cantidad); // Registrar el movimiento en el kardex
         } catch (Exception e) {
-            model.addAttribute("error", "error al hacer el movimiento del producto: " + e.getMessage());
+            model.addAttribute("error", "Error al hacer el movimiento del producto: " + e.getMessage());
         }
-        return "redirect:/inventario/listar";
+        return "redirect:/inventario/listar"; // Redirigir a la lista de productos
     }
-
 }

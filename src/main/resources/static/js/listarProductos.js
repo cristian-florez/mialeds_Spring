@@ -1,14 +1,11 @@
 /*este codigo se crea con el proposito de manejar el autocompletado en el modal nuevo, para poder
-buscar productos mas facilmente, utilizando una la apiRest de ventaRestController */
+buscar productos mas facilmente, utilizando una la apiRest de ProductoRestController  */
 $(document).ready(function() {
     // Evento que se activa al hacer clic en el botón "Agregar Producto"
-    $('#agregarProducto').click(function() {
-        // Lógica para agregar un producto (a implementar).
-    });
 
     // Solicitud AJAX para obtener la lista de productos del servidor
     $.ajax({
-        url: 'http://localhost:8080/api/venta/listar', // URL del servidor para obtener los productos
+        url: 'http://localhost:8080/api/producto/listar', // URL del servidor para obtener los productos
         type: 'GET', // Tipo de solicitud para obtener datos
         success: function(response) {
             let productos = {}; // Objeto para el autocompletado
@@ -25,7 +22,7 @@ $(document).ready(function() {
             });
 
             // Configurar el autocompletado en los campos de texto con la lista de productos
-            $('input.autocomplete').autocomplete({
+            $('#buscar_producto').autocomplete({
                 data: productos, // Datos para las sugerencias de autocompletado
                 limit: 5, // Máximo de sugerencias mostradas
                 minLength: 1, // Caracteres mínimos para activar el autocompletado

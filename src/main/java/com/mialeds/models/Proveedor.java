@@ -39,6 +39,13 @@ public class Proveedor {
         this.telefono = telefono;
     }
 
+    public Proveedor(String nombre, String nit, String correoElectronico, String telefono) {
+        this.nombre = nombre;
+        this.nit = nit;
+        this.correoElectronico = correoElectronico;
+        this.telefono = telefono;
+    }    
+
     public int getIdProveedor() {
         return idProveedor;
     }

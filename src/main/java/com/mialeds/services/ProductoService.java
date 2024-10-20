@@ -15,8 +15,8 @@ import com.mialeds.models.Producto;
 import com.mialeds.repositories.ProductoRepository;
 
 //importamos la clase Logger y LoggerFactory de slf4j para poder hacer logs de errores
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+    import org.slf4j.Logger;
+    import org.slf4j.LoggerFactory;
 
 @Service
 public class ProductoService {
@@ -92,7 +92,7 @@ public class ProductoService {
     public Producto actualizar(int id, String nombre, String presentacion, int precioCompra, int precioVenta, int cantidad) {
        //usamos el metodo buscarPorId de esta misma para obtener el producto por su id
        try {
-        Producto p = this.buscarPorId(id);
+        Producto p = buscarPorId(id);
         //campos del producto que se van a actualizar
         p.setNombre(nombre);
         p.setPresentacion(presentacion);
@@ -101,7 +101,7 @@ public class ProductoService {
         p.setCantidadExistente(cantidad);
 
         //usamos el metodo guardar de esta misma clase para guardar el producto actualizado
-        this.guardar(p);
+        guardar(p);
         //retornamos el producto actualizado
         return p;
          } catch (Exception e) {
@@ -128,7 +128,7 @@ public class ProductoService {
         /*usamos el metodo buscarPorId de esta misma para obtener el producto por su id,
          lo hacemos asi y no directamente en el deleteById para evitar errores*/
         try {
-        Producto p = this.buscarPorId(id);
+        Producto p = buscarPorId(id);
         productoRepository.deleteById(p.getIdProducto());
         } catch (Exception e) {
             logger.error("Error al eliminar el producto: " + e.getMessage());

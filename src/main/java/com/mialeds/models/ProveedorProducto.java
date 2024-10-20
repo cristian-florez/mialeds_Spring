@@ -38,6 +38,12 @@ public class ProveedorProducto {
         this.precioCompraProveedor = precioCompraProveedor;
     }
 
+    public ProveedorProducto(Proveedor proveedor, Producto producto, int precioCompraProveedor) {
+        this.proveedor = proveedor;
+        this.producto = producto;
+        this.precioCompraProveedor = precioCompraProveedor;
+    }
+
     public int getId() {
         return id;
     }
