@@ -4,6 +4,8 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -67,6 +69,60 @@ public class UsuarioService {
     public Integer obtenerIdPorCedula(String cedula) {
         return usuarioRepository.findIdByCedula(cedula)
                 .orElseThrow(() -> new RuntimeException("Usuario no encontrado con cédula: " + cedula));
+    }
+
+        //metodo que obtiene el id del usuario de la sesion, utilizando el metodo de SpringSecurity
+    public Integer obtenerIdUsuarioSesion(){
+        //obtenemos la autenticacion del usuario
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        //obtenemos la cedula del usuario y la buscamos en la base de datos, como cada usuario tiene una cedula unica, obtenemos el id del usuario
+        String cedula = authentication.getName();
+        int id = obtenerIdPorCedula(cedula);
+        return id;
+    }
+
+    //metodo que obtiene la informacion del usuario de la sesion
+    public Usuario obtenerInformacionUsuario(){
+        try{
+            //obtenemos el id del usuario de la sesion
+            Integer id = obtenerIdUsuarioSesion();
+            Usuario usuario = buscarPorId(id);
+            return usuario;
+        }catch(Exception e){
+            logger.error("Error al obtener la información del usuario: " + e.getMessage());
+            return null;
+        }
+    }
+
+    //metodo que actualiza cierta informacion del usuario
+    public Usuario actualizarUsuario(int id, String nombre, String cedula, String correo, String telefono) {
+        try {
+            Usuario usuario = buscarPorId(id);
+            usuario.setNombre(nombre);
+            usuario.setCedula(cedula);
+            usuario.setCorreoElectronico(correo);
+            usuario.setTelefono(telefono);
+            return usuarioRepository.save(usuario);
+        } catch (Exception e) {
+            logger.error("Error al actualizar el usuario: " + e.getMessage());
+            return null;
+        }
+    }
+
+    //metodo que cambia la contraseña del usuario
+    public void cambiarContrasena(int id, String claveVieja, String claveNueva) {
+        try {
+            Usuario usuario = buscarPorId(id);
+            //verificamos si la contraseña antigua coincide con la contraseña del usuario
+            if (passwordEncoder.matches(claveVieja, usuario.getContrasena())) {
+                usuario.setContrasena(passwordEncoder.encode(claveNueva));
+                usuarioRepository.save(usuario);
+            } else {
+                throw new RuntimeException("La contraseña antigua no coincide");
+            }
+        } catch (Exception e) {
+            logger.error("Error al cambiar la contraseña: " + e.getMessage());
+        }
     }
 
 }

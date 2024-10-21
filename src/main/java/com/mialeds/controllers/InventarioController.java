@@ -14,13 +14,14 @@ import com.mialeds.services.KardexService;
 import java.time.LocalDate;
 // Importar la clase ProductoService para realizar operaciones relacionadas con productos
 import com.mialeds.services.ProductoService;
+import com.mialeds.services.UsuarioService;
 
 // Importar la clase Model de Spring Framework para pasar datos a la vista
 import org.springframework.ui.Model;
 
 @Controller // Anotación que indica que esta clase es un controlador
 @RequestMapping("/inventario") // Establece la ruta base para todas las solicitudes de este controlador
-public class InventarioController {
+public class InventarioController extends UsuarioDatosController {
 
     // Inyectar ProductoService para manejar operaciones de productos
     @Autowired
@@ -29,6 +30,9 @@ public class InventarioController {
     // Inyectar KardexService para manejar operaciones del kardex
     @Autowired
     private KardexService kardexService;
+
+    @Autowired
+    private UsuarioService usuarioService;
 
     // Método para pasar la lista de productos escasos a la vista
     private void productosEscasos(Model model) {
@@ -125,7 +129,8 @@ public class InventarioController {
             Model model) {
         try {
             productoService.movimiento(id, cantidad, movimiento); // Actualizar el producto según el movimiento
-            kardexService.crear(id, 2, movimiento, LocalDate.parse(fecha), cantidad); // Registrar el movimiento en el kardex
+            int idUsuario = usuarioService.obtenerIdUsuarioSesion(); // Obtener el ID del usuario en sesión
+            kardexService.crear(id, idUsuario, movimiento, LocalDate.parse(fecha), cantidad); // Registrar el movimiento en el kardex
         } catch (Exception e) {
             model.addAttribute("error", "Error al hacer el movimiento del producto: " + e.getMessage());
         }

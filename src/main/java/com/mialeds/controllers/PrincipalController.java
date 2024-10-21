@@ -1,12 +1,12 @@
 package com.mialeds.controllers;
 
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 
 @Controller
-public class PrincipalController {
+public class PrincipalController extends UsuarioDatosController {
 
-    @PostMapping("/principal")
+    @GetMapping("/principal")
     public String principal() {
         return "principal";
     }

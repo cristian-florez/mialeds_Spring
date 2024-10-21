@@ -21,7 +21,7 @@ import org.springframework.ui.Model;
 
 @Controller
 @RequestMapping("/venta")
-public class VentaController {
+public class VentaController extends UsuarioDatosController {
 
     @Autowired
     private VentaService ventaService;

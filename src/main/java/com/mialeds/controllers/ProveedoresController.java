@@ -17,7 +17,7 @@ import org.springframework.ui.Model;
 
 @Controller
 @RequestMapping("/proveedor")
-public class ProveedoresController {
+public class ProveedoresController extends UsuarioDatosController {
 
     // Inyección de dependencias
     @Autowired

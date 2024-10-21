@@ -7,8 +7,6 @@ import java.time.LocalDate;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import com.mialeds.models.Producto;
@@ -97,15 +95,6 @@ public class VentaService {
     return numberFormat.format(totalVentas);
     }
 
-    //metodo que obtiene el id del usuario que esta realizando la venta, utilizando el metodo de SpringSecurity
-    private Integer obtenerCedulaUsuario(){
-        //obtenemos la autenticacion del usuario
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        //obtenemos la cedula del usuario y la buscamos en la base de datos, como cada usuario tiene una cedula unica, obtenemos el id del usuario
-        String cedula = authentication.getName();
-        int id = usuarioService.obtenerIdPorCedula(cedula);
-        return id;
-    }
 
     public Venta guardar(int idProducto, int cantidad, LocalDate fecha) {
         try {
@@ -117,7 +106,7 @@ public class VentaService {
             }
 
             //obtenemos el usuario que esta realizando la venta
-            int idUsuario = obtenerCedulaUsuario();
+            int idUsuario = usuarioService.obtenerIdUsuarioSesion();
             Usuario usuario = usuarioService.buscarPorId(idUsuario);
 
             //verificamos que la cantidad de productos existentes sea suficiente
@@ -186,7 +175,7 @@ public class VentaService {
             }
 
             //obtenemos el usuario que esta realizando la venta
-            int idUsuario = obtenerCedulaUsuario();
+            int idUsuario = usuarioService.obtenerIdUsuarioSesion();
             Usuario usuario = usuarioService.buscarPorId(idUsuario);
 
             //si el total de la venta no cambio, se calcula el total de la venta multiplicando el precio de venta del producto por la cantidad, si cambio el total de la venta, se toma el total que se le paso
