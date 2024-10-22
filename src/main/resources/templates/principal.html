@@ -15,35 +15,54 @@
 
     <main class="main">
         <div class="row grafico">
-                <div class="col m4 s12 graficos">
+            <div class="col s12">
+                <div class="col m1"></div>
+                <div class="col m5 s12 graficos">
                     <div class="card">
                         <div class="card-image">
-                            <img th:src="@{/images/grafica.png}" alt="">
+                            <canvas id="graficoProductos1" height="150" width="200"></canvas>
                         </div>
                     </div>
                 </div>
-                <div class="col m4 s12 graficos">
+                <div class="col m5 s12 graficos">
                     <div class="card">
                         <div class="card-image">
-                            <img th:src="@{/images/grafica.png}" alt="">
+                            <canvas id="graficoProductos2" height="150" width="200"></canvas>
                         </div>
                     </div>
                 </div>
-                <div class="col m4 s12 graficos">
+                <div class="col m1"></div>
+            </div>
+            <div class="col m12">
+                <div class="col m1"></div>
+                <div class="col m5 s12 graficos">
                     <div class="card">
                         <div class="card-image">
-                            <img th:src="@{/images/grafica.png}" alt="">
+                            <canvas id="graficoProductos3" height="150" width="200"></canvas>
                         </div>
                     </div>
-                </div>
+                </div>  
+                <div class="col m5 s12 graficos">
+                    <div class="card">
+                        <div class="card-image">
+                            <canvas id="graficoProductos4" height="150" width="200"></canvas>
+                        </div>
+                    </div>
+                </div> 
+                <div class="col m1"></div> 
+            </div>
+          
         </div>
     </main>
 
     <footer class="page-footer red">
         <small>&copy; Derechos Reservados 2024</small>
     </footer>
-
+    <script th:src="@{https://code.jquery.com/jquery-3.6.0.min.js}"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script th:src="@{/js/script.js}"></script> <!-- Script personalizado -->
+    <script th:src="@{/js/graficos.js}"></script>
+
     </body>
 </html>

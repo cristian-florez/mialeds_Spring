@@ -69,28 +69,28 @@
                         <div id="olvide_clave" class="modal">
                           <div class="modal-content m8">
                             <h4 class="flow-text">Olvidé mi contraseña</h4>
-                            <form name="olvide_clave" method="get">
-                                <!-- Campo de nombre de usuario -->
+                            <form method="POST" th:action="@{/restaurarClave}">
                                 <div class="input-field">
-                                    <input type="text" id="nombre_olvide_clave" maxlength="12" class="validate" required>
-                                    <label for="nombre_olvide_clave">
-                                        <i class="tiny material-icons">account_circle</i> Nombre usuario 
-                                    </label>
-                                </div>
-                                <!-- Campo de número de identificación -->
-                                <div class="input-field">
-                                    <input type="text" id="identificacion_usuario_olvide_clave" class="validate" required>
+                                    <input type="text" id="identificacion_usuario_olvide_clave" name="cedula_olvide_clave" class="validate" required>
                                     <label for="identificacion_usuario_olvide_clave">
                                         <i class="tiny material-icons">badge</i> Número de identificación
                                     </label>
                                 </div>
+                                <div class="input-field">
+                                    <input type="text" id="correo_olvide_clave" name="correo_olvide_clave" class="validate" required>
+                                    <label for="correo_olvide_clave">
+                                        <i class="tiny material-icons">email</i> Correo electronico 
+                                    </label>
+                                </div>
+                                <div class="modal-footer cuadro_botones_2 white">
+                                    <!-- Botón para confirmar la eliminación del producto -->
+                                    <button type="submit" class="btn waves-effect waves-flat btn-flat green white-text">Aceptar</button>
+                                    <!-- Enlace para cancelar la eliminación y cerrar el modal -->
+                                    <a href="#!" class="modal-close waves-effect waves-flat btn-flat red white-text">Cancelar</a>
+                                </div>
                             </form>
                           </div>
                           <!-- Botones del modal -->
-                          <div class="modal-footer col m12 cuadro_botones_2 center-align">
-                            <a href="#!" class="modal-close waves-effect waves-flat btn-flat green white-text col m3">Confirmar</a>
-                            <a href="#!" class="modal-close waves-effect waves-flat btn-flat red white-text col m3">Cancelar</a>
-                          </div>
                         </div>
                     </div>
                 </div>

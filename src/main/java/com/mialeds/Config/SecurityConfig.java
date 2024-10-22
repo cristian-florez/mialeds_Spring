@@ -46,6 +46,7 @@ public class SecurityConfig {
                     // Definimos qué solicitudes HTTP son públicas y cuáles requieren autenticación
                     http.requestMatchers(HttpMethod.GET, "/auth/hello").permitAll(); // Permitir acceso sin autenticación a esta URL
                     http.requestMatchers("/crear-usuario").permitAll(); // Permitir acceso sin autenticación a la URL para crear usuarios
+                    http.requestMatchers("/restaurarClave").permitAll(); // Permitir acceso sin autenticación a la URL para crear usuarios
                     http.requestMatchers("/css/**").permitAll(); // Permitir acceso a todos los archivos CSS
                     http.requestMatchers("/js/**").permitAll(); // Permitir acceso a todos los archivos JavaScript
                     http.requestMatchers("/images/**").permitAll(); // Permitir acceso a todas las imágenes

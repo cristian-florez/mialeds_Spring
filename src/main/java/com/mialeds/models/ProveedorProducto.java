@@ -25,7 +25,7 @@ public class ProveedorProducto {
     @JoinColumn(name = "id_producto", nullable = false)
     private Producto producto;
 
-    @Column(name = "precio_compra_proveedor", nullable = false)
+    @Column(name = "precio_compra_proveedor", nullable = false, columnDefinition = "int default 0")
     private int precioCompraProveedor;
 
     public ProveedorProducto() {

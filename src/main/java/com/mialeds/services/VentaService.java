@@ -235,4 +235,48 @@ public class VentaService {
             logger.error("Error al eliminar la venta: " + e.getMessage());
         }
     }
+
+    //metodo que obtiene los 5 productos mas vendidos
+    public List<Object[]> obtenerTop5ProductosMasVendidos() {
+        try {
+            LocalDate fechaInicio = LocalDate.now().minusMonths(1);
+            return ventaRepository.findTop5ProductosMasVendidos(fechaInicio);
+        } catch (Exception e) {
+            logger.error("Error al obtener los 5 productos mas vendidos: " + e.getMessage());
+            return null;
+        }
+    }
+
+    //metodo que obtiene los 5 productos menos vendidos
+    public List<Object[]> obtenerTop5ProductosMenosVendidos() {
+        try {
+            LocalDate fechaInicio = LocalDate.now().minusMonths(1);
+            return ventaRepository.findTop5ProductosMenosVendidos(fechaInicio);
+        } catch (Exception e) {
+            logger.error("Error al obtener los 5 productos menos vendidos: " + e.getMessage());
+            return null;
+        }
+    }
+
+    //metodo que obtiene las ventas por dia de los ultimos 30 dias
+    public List<Object[]> obtenerVentasUltimoMes() {
+        try {
+            LocalDate fechaInicio = LocalDate.now().minusMonths(1);
+            return ventaRepository.findVentasPorDiaUltimos30Dias(fechaInicio);
+        } catch (Exception e) {
+            logger.error("Error al obtener las ventas de los ultimos 30 dias: " + e.getMessage());
+            return null;
+        }
+    }
+
+    //metodo que obtiene las ganancias por dia de los ultimos 30 dias
+    public List<Object[]> obtenerGananciasUltimoMes() {
+        try {
+            LocalDate fechaInicio = LocalDate.now().minusMonths(1);
+            return ventaRepository.findGananciasPorDiaUltimos30Dias(fechaInicio);
+        } catch (Exception e) {
+            logger.error("Error al obtener las ganancias de los ultimos 30 dias: " + e.getMessage());
+            return null;
+        }
+    }
 }

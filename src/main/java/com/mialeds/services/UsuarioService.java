@@ -1,7 +1,6 @@
 package com.mialeds.services;
 
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -55,15 +54,16 @@ public class UsuarioService {
         }
     }
 
-    // Este método retorna un usuario por su cédula, utilizado en Spring Security para la autenticación
-    public Optional<Usuario> buscarPorCedula(String cedula) {
+    // Este método retorna un usuario por su cédula, utilizado a cambiar contraseña
+    public Usuario buscarUsuarioAutenticacion(String cedula) {
         try {
-            return usuarioRepository.findByCedula(cedula);
+            Usuario usuario = usuarioRepository.findByCedulaQuery(cedula);
+            return usuario;
         } catch (Exception e) {
             logger.error("Error al buscar el usuario: " + e.getMessage());
             return null;
         }
-    }
+    }    
 
     // Este método retorna el id de un usuario por su cédula, utilizado en ventas
     public Integer obtenerIdPorCedula(String cedula) {
@@ -109,7 +109,7 @@ public class UsuarioService {
         }
     }
 
-    //metodo que cambia la contraseña del usuario
+    //metodo que cambia la contraseña del usuario iniciado sesion
     public void cambiarContrasena(int id, String claveVieja, String claveNueva) {
         try {
             Usuario usuario = buscarPorId(id);
@@ -123,6 +123,28 @@ public class UsuarioService {
         } catch (Exception e) {
             logger.error("Error al cambiar la contraseña: " + e.getMessage());
         }
+    }
+
+    //metodo que cambia la contraseña del usuario sin haber iniciado sesion
+    public void cambiarContrasena(String cedula, String claveNueva) {
+        try {
+            Usuario usuario = buscarUsuarioAutenticacion(cedula);
+            usuario.setContrasena(passwordEncoder.encode(claveNueva));
+            usuarioRepository.save(usuario);
+        } catch (Exception e) {
+            logger.error("Error al cambiar la contraseña: " + e.getMessage());
+        }
+    }
+
+    
+    public String generarContraseña() {
+        String caracteres = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+        String contraseña = "";
+        for (int i = 0; i < 8; i++) {
+            int indice = (int) (caracteres.length() * Math.random());
+            contraseña += caracteres.charAt(indice);
+        }
+        return contraseña;
     }
 
 }
