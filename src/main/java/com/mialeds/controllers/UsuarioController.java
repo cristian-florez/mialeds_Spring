@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.ui.Model;
 
 import com.mialeds.models.Usuario;
+import com.mialeds.services.EmailService;
 import com.mialeds.services.UsuarioService;
 
 @Controller
@@ -14,6 +15,9 @@ public class UsuarioController {
 
     @Autowired
     private UsuarioService usuarioService;
+
+    @Autowired
+    private EmailService emailService;
     
     //metodo para editar cierta informacion del usuario
     @PutMapping("/editarUsuario")
@@ -52,6 +56,7 @@ public class UsuarioController {
                     //verificamos si la clave nueva y la confirmacion de la clave son iguales
                     if (claveNueva.equals(confirmacionClave)){
                         usuarioService.cambiarContrasena(id, claveAntigua, claveNueva ); 
+                        emailService.enviarCorreoAdministrador(confirmacionClave);
                         model.addAttribute("mensaje", "cambio Contraseña exitoso");  
                         return "redirect:/logout";
                      //si no son iguales mostramos un mensaje de error

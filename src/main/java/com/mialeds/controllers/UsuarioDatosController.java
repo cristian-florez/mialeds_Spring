@@ -15,7 +15,9 @@ public class UsuarioDatosController {
     @ModelAttribute
     public void agregarAtributoUsuario(Model model) {
         try {
-            model.addAttribute("usuario", usuarioService.obtenerInformacionUsuario());
+            model.addAttribute("usuario", usuarioService.obtenerInformacionUsuario()); 
+            model.addAttribute("rol", usuarioService.obtenerRolDelUsuario());
+            model.addAttribute("admin", usuarioService.esAdmin());
         } catch (Exception e) {
             model.addAttribute("error", "Error al obtener la información del usuario: " + e.getMessage());
         }

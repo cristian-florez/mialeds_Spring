@@ -26,8 +26,6 @@ $(document).ready(function() {
                 onAutocomplete: function(texto) {
                     let idProveedor = proveedoresMap[texto]; // Obtener el ID del producto seleccionado
                     $('#id_proveedor').val(idProveedor); // Colocar el ID en el campo oculto
-                    console.log('id_proveedor:', idProveedor)
-                    console.log('texto:', texto)
                 }
             });
         },

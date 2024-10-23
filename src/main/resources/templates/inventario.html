@@ -78,7 +78,7 @@
                     </div>
                 </div>
                 <!--ingreso, salida y nuevos productos-->
-                <div class="col s5 m2 cuadro_botones_opciones">
+                <div class="col s5 m2 cuadro_botones_opciones" th:if="${admin}">
                     <div class="col s12">
                         <a class="btn modal-trigger red crud" href="#buscar_entradas">
                             registro entradas
@@ -98,7 +98,7 @@
                     </div>
                 </div>
                 <!-- Modal para registrar movimiento de productos -->
-                <div id="registrar_movimiento" class="modal center-align">
+                <div id="registrar_movimiento" class="modal center-align" th:if="${admin}">
                     <!-- Contenido del modal -->
                     <div class="modal-content">
                         <!-- Título del modal en color rojo -->
@@ -123,14 +123,14 @@
                                 </div>
                                 <!-- Campo para ingresar la cantidad del producto -->
                                 <div class="input-field col s6 m2">
-                                    <input type="number" id="cantidad_movimiento" name="cantidad_movimiento" class="autocomplete" data-position="bottom">
+                                    <input type="number" id="cantidad_movimiento" name="cantidad_movimiento" class="autocomplete" data-position="bottom" required>
                                     <label for="cantidad_movimiento">
                                         Cantidad
                                     </label>
                                 </div>
                                 <!-- Campo para seleccionar la fecha del movimiento -->
                                 <div class="input-field col s6 m4">
-                                    <input type="date" id="fecha_movimiento" name="fecha_movimiento" data-position="bottom">
+                                    <input type="date" id="fecha_movimiento" name="fecha_movimiento" data-position="bottom" required>
                                 </div>
                                 <!-- Espacio para ajuste del diseño -->
                                 <div class="col s12"></div>
@@ -140,14 +140,14 @@
                                     <!-- Botón para enviar el formulario -->
                                     <button type="submit" class="btn waves-effect waves-flat btn-flat green white-text">Aceptar</button>
                                     <!-- Enlace para cerrar el modal y regresar a la lista de productos -->
-                                    <a th:href="@{/inventario/listar}" class="waves-effect waves-flat btn-flat red white-text">Cerrar</a>
+                                    <a th:href="@{/inventario/listar}" class="modal-close waves-effect waves-flat btn-flat red white-text">Cerrar</a>
                                 </div>
                             </form>
                         </div>
                     </div>
                 </div>
                 <!-- Modal para editar productos -->
-                <div id="editar_producto" class="modal center-align">
+                <div id="editar_producto" class="modal center-align" th:if="${admin}">
                     <!-- Contenido del modal -->
                     <div class="modal-content white">
                         <!-- Título del modal en color rojo -->
@@ -162,28 +162,28 @@
                                 </div>
                                 <!-- Campo para ingresar el nombre del producto -->
                                 <div class="input-field col s8 m3">
-                                    <input type="text" id="nombre_producto_editar" placeholder="nombre" name="nombre_editar" class="autocomplete">
+                                    <input type="text" id="nombre_producto_editar" placeholder="nombre" name="nombre_editar" class="autocomplete" required>
                                     <label for="nombre_producto_editar">
                                         Nombre producto
                                     </label>
                                 </div>
                                 <!-- Campo para ingresar la presentación del producto -->
                                 <div class="input-field col s4 m3">
-                                    <input type="text" id="presentacion_editar" placeholder="presentacion" name="presentacion_editar" class="autocomplete">
+                                    <input type="text" id="presentacion_editar" placeholder="presentacion" name="presentacion_editar" class="autocomplete" required>
                                     <label for="presentacion_editar">
                                         Presentación
                                     </label>
                                 </div>
                                 <!-- Campo para ingresar el precio de compra del producto -->
                                 <div class="input-field col s6 m3">
-                                    <input type="number" id="precio_compra_editar" placeholder="precio compra" name="precio_compra_editar" class="autocomplete">
+                                    <input type="number" id="precio_compra_editar" placeholder="precio compra" name="precio_compra_editar" class="autocomplete" required>
                                     <label for="precio_compra_editar">
                                         Precio compra
                                     </label>
                                 </div>
                                 <!-- Campo para ingresar el precio de venta del producto -->
                                 <div class="input-field col s6 m3">
-                                    <input type="number" id="precio_venta_editar" placeholder="precio venta" name="precio_venta_editar" class="autocomplete">
+                                    <input type="number" id="precio_venta_editar" placeholder="precio venta" name="precio_venta_editar" class="autocomplete" required>
                                     <label for="precio_venta_editar">
                                         Precio venta
                                     </label>
@@ -204,7 +204,7 @@
                     </div>
                 </div>
                 <!-- Modal para registrar nuevos productos -->
-                <div id="producto_nuevo" class="modal center-align">
+                <div id="producto_nuevo" class="modal center-align" th:if="${admin}">
                     <!-- Contenido del modal -->
                     <div class="modal-content white">
                         <!-- Título del modal en color rojo -->
@@ -214,28 +214,28 @@
                             <form th:action="@{/inventario/nuevo}" method="POST">
                                 <!-- Campo para ingresar el nombre del nuevo producto -->
                                 <div class="input-field col s8 m3">
-                                    <input type="text" id="nombre_producto_nuevo" name="nombre_producto_nuevo" class="autocomplete">
+                                    <input type="text" id="nombre_producto_nuevo" name="nombre_producto_nuevo" class="autocomplete" required>
                                     <label for="nombre_producto_nuevo">
                                         Nombre producto
                                     </label>
                                 </div>
                                 <!-- Campo para ingresar la presentación del nuevo producto -->
                                 <div class="input-field col s4 m3">
-                                    <input type="text" id="presentacion_nuevo" name="presentacion_nuevo" class="autocomplete">
+                                    <input type="text" id="presentacion_nuevo" name="presentacion_nuevo" class="autocomplete" required>
                                     <label for="presentacion_nuevo">
                                         Presentación
                                     </label>
                                 </div>
                                 <!-- Campo para ingresar el precio de compra del nuevo producto -->
                                 <div class="input-field col s6 m3">
-                                    <input type="number" id="precio_compra_nuevo" name="precio_compra_nuevo" class="autocomplete">
+                                    <input type="number" id="precio_compra_nuevo" name="precio_compra_nuevo" class="autocomplete" required>
                                     <label for="precio_compra_nuevo">
                                         Precio compra
                                     </label>
                                 </div>
                                 <!-- Campo para ingresar el precio de venta del nuevo producto -->
                                 <div class="input-field col s6 m3">
-                                    <input type="number" id="precio_venta_nuevo" name="precio_venta_nuevo" class="autocomplete">
+                                    <input type="number" id="precio_venta_nuevo" name="precio_venta_nuevo" class="autocomplete" required>
                                     <label for="precio_venta_nuevo">
                                         Precio venta
                                     </label>
@@ -256,7 +256,7 @@
                     </div>
                 </div>               
                 <!-- Modal para eliminar un producto -->
-                <div id="eliminar_producto" class="modal center-align">
+                <div id="eliminar_producto" class="modal center-align" th:if="${admin}">
                     <!-- Contenido del modal -->
                     <div class="modal-content white">
                         <!-- Mensaje de confirmación de eliminación -->
@@ -281,7 +281,7 @@
                     </div>
                 </div>
                 <!--buscar registros de entradas de productos-->
-                <div id="buscar_entradas" class="modal center-align">
+                <div id="buscar_entradas" class="modal center-align" th:if="${admin}">
                     <div class="modal-content white">
                         <div class="col s12">
                             <h5 class="red-text">Registros de entradas de productos</h5>
@@ -317,7 +317,7 @@
 
                 <!--buscar registro de salida de registros-->
 
-                <div id="buscar_salidas" class="modal center-align">
+                <div id="buscar_salidas" class="modal center-align" th:if="${admin}">
                     <div class="modal-content white">
                         <div class="col s12">
                             <h5 class="red-text">Registros de salidas de productos</h5>
@@ -368,7 +368,7 @@
                             <th>Precio compra</th>
                             <th>Precio venta</th>
                             <th>Cantidad</th>
-                            <th>
+                            <th th:if="${admin}">
                                 <!-- Botón de ajustes de inventario con un menú desplegable -->
                                 <a class="dropdown-trigger btn tooltipped red-text boton_ajustes" 
                                    data-position="bottom" 
@@ -406,7 +406,7 @@
                             <td th:text="${pro.precioVenta}"></td>
                             <td th:text="${pro.cantidadExistente}"></td>
                             <!-- Columna para acciones relacionadas con el producto -->
-                            <td>
+                            <td th:if="${admin}">
                                 <!-- Enlace de opción con datos del producto (se muestra u oculta según sea necesario) -->
                                 <a class="btn red-text white opciones" 
                                    id="selector" 
@@ -434,13 +434,5 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
     <script th:src="@{/js/script.js}"></script>
     <script th:src="@{/js/configInventario.js}"></script>
-    <!-- mostrar mensajes de error -->
-    <script th:if="${error}">
-        document.addEventListener('DOMContentLoaded', function() {
-            M.toast({html: '<span th:text="${error}"></span>', classes: 'red'});
-        });
-        console.log('Error: [[${error}]]');
-    </script>
-
 </body>
 </html>

@@ -54,31 +54,33 @@
                         <form th:action="@{/venta/nuevo}" method="POST">
                             <div class="col s12">
                                 <div class="input-field col s12 m6 buscador">
-                                    <input type="text" id="buscar_producto" class="autocomplete" >
+                                    <input type="text" id="buscar_producto" class="autocomplete" required>
                                     <label for="buscar_entrada">
                                         Producto
                                     </label>
                                     <input type="hidden" id="id_producto" name="id_producto_venta">
                                 </div> 
                                 <div class="input-field col s6 m2">
-                                    <input type="number" id="cantidad_entrada_venta" name="cantidad_entrada_venta" class="autocomplete " data-position="bottom">
+                                    <input type="number" id="cantidad_entrada_venta" name="cantidad_entrada_venta" class="autocomplete " data-position="bottom" required>
                                     <label for="cantidad_entrada">
                                         cantidad
                                     </label>
                                 </div>
                                 <div class="input-field col s6 m4">
-                                    <input type="date" id="fecha_venta" name="fecha_venta" data-position="bottom">
+                                    <input type="date" id="fecha_venta" name="fecha_venta" data-position="bottom" required>
                                 </div>
+                                <div id="errorDivNuevaVenta" class="error col s12"></div> <!-- Div para mostrar errores -->
+                                
                                 <div class="modal-footer cuadro_botones_2 white">
                                     <button type="submit"  class="btn waves-effect waves-flat btn-flat green white-text">Agregar</button>
-                                    <a class="modal-close waves-effect waves-flat btn-flat red white-text">Cerrar</a>
+                                    <a th:href="@{/venta/listar}" class="modal-close waves-effect waves-flat btn-flat red white-text">Cerrar</a>
                                 </div>
                             </div>
                         </form>
                       </div>
                     </div>
                     <!-- Modal para editar una venta -->
-                    <div id="editar_venta" class="modal center-align">
+                    <div id="editar_venta" class="modal center-align" th:if="${admin}">
                       <div class="modal-content white">
                         <h5 class="red-text">Editar Venta</h5>
                         <form th:action="@{/venta/editar}" method="POST">
@@ -93,23 +95,24 @@
                                     <input type="hidden" id="id_producto_venta" name="id_producto_venta">
                                 </div> 
                                 <div class="input-field col s6 m2">
-                                    <input type="number" id="cantidad_editar_venta" name="cantidad_editar_venta" placeholder=" ">
+                                    <input type="number" id="cantidad_editar_venta" name="cantidad_editar_venta" placeholder=" " required>
                                     <label for="cantidad_editar_venta">
                                         cantidad
                                     </label>
                                 </div>
                                 <div class="input-field col s6 m2">
-                                    <input type="number" id="cantidad_editar_total_venta" name="cantidad_editar_total_venta" placeholder=" ">
+                                    <input type="number" id="cantidad_editar_total_venta" name="cantidad_editar_total_venta" placeholder=" " required>
                                     <label for="cantidad_editar_total_venta">
                                         total venta
                                     </label>
                                 </div>
                                 <div class="input-field col s6 m3">
-                                    <input type="date" id="fecha_editar_venta" name="fecha_editar_venta" data-position="bottom" placeholder=" ">
+                                    <input type="date" id="fecha_editar_venta" name="fecha_editar_venta" data-position="bottom" placeholder=" " required>
                                     <label for="fecha_editar_venta">
                                         fecha
                                     </label>
                                 </div>
+                                <div id="errorDivEditarProducto" class="error col s12"></div> <!-- Div para mostrar errores -->
                                 <div class="modal-footer cuadro_botones_2 white">
                                     <button type="submit"  class="btn waves-effect waves-flat btn-flat green white-text">Aceptar</button>
                                     <a th:href="@{/venta/listar}" class="modal-close waves-effect waves-flat btn-flat red white-text">Cancelar</a>
@@ -119,7 +122,7 @@
                       </div>
                     </div>
                     <!-- Modal para eliminar un producto -->
-                    <div id="eliminar_venta" class="modal center-align">
+                    <div id="eliminar_venta" class="modal center-align" th:if="${admin}">
                         <div class="modal-content white">
                             <h6 class="red-text">¿Seguro deseas eliminar esta venta?</h6>
                             <h6 class="red-text"><span id="mensaje_eliminar"></span></h6>
@@ -151,7 +154,7 @@
                         <th>Cantidad vendida</th>
                         <th>Total venta</th>
                         <th>Fecha</th>
-                        <th>
+                        <th th:if="${admin}">
                             <a class="dropdown-trigger btn tooltipped red-text boton_ajustes" data-position="bottom" data-tooltip="ajustes de ventas" href='#' data-target='settings_venta'>
                                 <i class="tiny material-icons ">settings</i>
                             </a>
@@ -176,7 +179,7 @@
                         <td th:text="${venta.cantidad}"></td>
                         <td th:text="${venta.totalVenta}"></td>
                         <td th:text="${venta.fecha}"></td>
-                        <td>
+                        <td th:if="${admin}">
                             <!-- Enlace de opción con datos del la venta (se muestra u oculta según sea necesario) -->
                             <a class="btn red-text white opciones" 
                                 id="selector_venta" 
@@ -205,5 +208,6 @@
     <script th:src="@{/js/configTablaVentas.js}"></script>
     <script th:src="@{/js/script.js}"></script>
     <script th:src="@{/js/listarProductos.js}"></script>
+    <script th:src="@{/js/erroresForm.js}"></script>
 </body>
 </html>

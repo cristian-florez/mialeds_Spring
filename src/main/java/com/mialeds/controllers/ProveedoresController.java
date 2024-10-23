@@ -1,6 +1,7 @@
 package com.mialeds.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -8,9 +9,13 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.mialeds.services.ProveedorProductoService;
 import com.mialeds.services.ProveedorService;
+
+import java.util.HashMap;
+import java.util.Map;
 
 
 import org.springframework.ui.Model;
@@ -107,20 +112,35 @@ public class ProveedoresController extends UsuarioDatosController {
     }
 
     // Método para asignar precio de venta de proveedores a cierto producto
-    @PostMapping("/asignarPrecio")
-    public String asignarPrecio(
+    @PutMapping("/asignarPrecio")
+    @ResponseBody
+    public ResponseEntity<Map<String, Object>> asignarPrecio(
         @RequestParam("id_proveedor_precio") int idProveedor,
         @RequestParam("id_producto_precio") int idProducto,
-        @RequestParam("precio_proveedor") int precio,
-        Model model) {
-        try {
+        @RequestParam("precio_proveedor") int precio) {
+
+        Map<String, Object> response = new HashMap<>();
+        try{
+            //validamos que el id del proveedor y del producto si existan
+            if(idProveedor == 0 || idProducto == 0){
+                response.put("success", false);
+                response.put("message", "Error: producto o proveedor no encontrado");
+                return ResponseEntity.ok(response);
+            }
             //buscamos el producto por id y el proveedor por id y asignamos el precio
-            proveedorProductoService.asignarPrecio(idProducto, idProveedor, precio);
-            model.addAttribute("mensaje", "Precio asignado correctamente");
-        } catch (Exception e) {
-            model.addAttribute("error", "Error al asignar el precio: " + e.getMessage());
+            boolean respuesta = proveedorProductoService.asignarPrecio(idProducto, idProveedor, precio);
+            if (respuesta) {
+                response.put("success", true);
+                response.put("message", "Precio asignado correctamente");
+            } else {
+                response.put("success", false);
+                response.put("message", "Error al asignar el precio: producto no encontrado");
+            }
+        }catch (Exception e) {
+            response.put("success", false);
+            response.put("message", "Error al asignar el precio: " + e.getMessage());
         }
-        return "redirect:/proveedor/listar";
+        return ResponseEntity.ok(response);
     }
 
 

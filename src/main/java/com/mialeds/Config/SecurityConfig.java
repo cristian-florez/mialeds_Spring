@@ -4,7 +4,6 @@ package com.mialeds.config;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
@@ -34,6 +33,7 @@ public class SecurityConfig {
                 .formLogin(form -> form
                     .loginPage("/login") // Especificamos la página de inicio de sesión personalizada
                     .defaultSuccessUrl("/principal", true) // Redirigimos al usuario a la página principal después de iniciar sesión
+                    .failureUrl("/login?error=true") // Redirigimos al usuario a la página de inicio de sesión con un mensaje de error si falla la autenticación
                     .permitAll()) // Permitimos que todos accedan a la página de inicio de sesión
                 .logout(logout -> logout
                     .logoutUrl("/logout") // Especificamos la URL para cerrar sesión
@@ -44,15 +44,23 @@ public class SecurityConfig {
                 
                 .authorizeHttpRequests(http -> {
                     // Definimos qué solicitudes HTTP son públicas y cuáles requieren autenticación
-                    http.requestMatchers(HttpMethod.GET, "/auth/hello").permitAll(); // Permitir acceso sin autenticación a esta URL
-                    http.requestMatchers("/crear-usuario").permitAll(); // Permitir acceso sin autenticación a la URL para crear usuarios
-                    http.requestMatchers("/restaurarClave").permitAll(); // Permitir acceso sin autenticación a la URL para crear usuarios
-                    http.requestMatchers("/css/**").permitAll(); // Permitir acceso a todos los archivos CSS
-                    http.requestMatchers("/js/**").permitAll(); // Permitir acceso a todos los archivos JavaScript
-                    http.requestMatchers("/images/**").permitAll(); // Permitir acceso a todas las imágenes
+                    http.requestMatchers("/login").permitAll(); 
+                    http.requestMatchers("/restaurarClave").permitAll();
+                    http.requestMatchers("/css/**").permitAll();
+                    http.requestMatchers("/js/**").permitAll(); 
+                    http.requestMatchers("/images/**").permitAll();
                     
                     // Aquí definimos las rutas que requieren autenticación
-                    http.requestMatchers(HttpMethod.GET, "/auth/hello-secured").hasRole("USER"); // Solo los usuarios con el rol "USER" pueden acceder a esta URL
+                    http.requestMatchers("/inventario/editar").hasRole("ADMIN");
+                    http.requestMatchers("/inventario/nuevo").hasRole("ADMIN");
+                    http.requestMatchers("/inventario/eliminar").hasRole("ADMIN");
+                    http.requestMatchers("/inventario/movimiento").hasRole("ADMIN");
+                    http.requestMatchers("/venta/editar").hasRole("ADMIN");
+                    http.requestMatchers("/venta/eliminar").hasRole("ADMIN");
+                    http.requestMatchers("/proveedor/**").hasRole("ADMIN");
+
+
+
                     http.anyRequest().authenticated(); // Cualquier otra solicitud debe estar autenticada
                 })
                 .build(); // Construimos la cadena de seguridad

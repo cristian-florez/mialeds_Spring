@@ -26,6 +26,7 @@
          </div>
          <div>
              <span class="name black-text center-align texto_usuario" th:text="${usuario.nombre}"></span>
+             <span class="name black-text center-align adm" th:text="${rol}"></span>
          </div> 
      </div>
  </li>
@@ -50,7 +51,7 @@
          Ventas
      </a>
  </li>
- <li>
+ <li th:if="${admin}">
      <a th:href="@{/proveedor/listar}">
          <i class="material-icons red-text">groups</i>
          Proveedores

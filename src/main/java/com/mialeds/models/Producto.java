@@ -46,6 +46,10 @@ public class Producto {
     @OneToMany(mappedBy = "producto", cascade = CascadeType.REMOVE)
     private List<Venta> ventas;
 
+    @JsonIgnore
+    @OneToMany(mappedBy = "producto", cascade = CascadeType.REMOVE)
+    private List<ProveedorProducto> proveedorProductos;
+
     public Producto() {
     }
 
@@ -128,6 +132,14 @@ public class Producto {
 
     public void setVentaProductos(List<Venta> ventas) {
         this.ventas = ventas;
+    }
+
+    public List<ProveedorProducto> getProveedorProductos() {
+        return proveedorProductos;
+    }
+
+    public void setProveedorProductos(List<ProveedorProducto> proveedorProductos) {
+        this.proveedorProductos = proveedorProductos;
     }
 
 }

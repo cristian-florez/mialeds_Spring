@@ -1,9 +1,11 @@
 package com.mialeds.controllers;
 
 import java.time.LocalDate;
-
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -11,6 +13,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.mialeds.models.Venta;
 import com.mialeds.services.VentaService;
@@ -63,35 +66,75 @@ public class VentaController extends UsuarioDatosController {
 
     //los parametros que no se pasan como id del usuario se obtiene mediante otra manera mediante el metodo de ventaService.guardar
     @PostMapping("/nuevo")
-    public String crearVenta(
-            @RequestParam("id_producto_venta") int idProducto,
-            @RequestParam("cantidad_entrada_venta") int cantidad,
-            @RequestParam("fecha_venta") LocalDate fecha,
-            Model model) {
+    @ResponseBody
+    public ResponseEntity<Map<String, Object>> crearVenta(
+            @RequestParam("id_producto_venta") int idProducto, 
+            @RequestParam("cantidad_entrada_venta") int cantidad, 
+            @RequestParam("fecha_venta") LocalDate fecha) {
+    
+        // Crear un mapa para almacenar la respuesta (success/failure y mensaje)
+        Map<String, Object> response = new HashMap<>();
         try {
-            ventaService.guardar(idProducto, cantidad, fecha);
-            model.addAttribute("mensaje", "Venta realizada con éxito");
+            //guardar la nueva venta
+            Venta nuevaVenta = ventaService.guardar(idProducto, cantidad, fecha);
+            
+            // Comprobar si la venta se guardó correctamente
+            if (nuevaVenta == null) {
+                // Si hay error (cantidad insuficiente o producto no encontrado)
+                response.put("success", false);
+                response.put("message", "Error al realizar la venta: cantidad insuficiente o producto no encontrado.");
+            } else {
+                // Si la venta se realizó con éxito
+                response.put("success", true);
+                response.put("message", "Venta realizada con éxito.");
+            }
         } catch (Exception e) {
-            model.addAttribute("error", "error al realizar la venta: " + e.getMessage());
+            // Capturar cualquier excepción y devolver un mensaje de error
+            response.put("success", false);
+            response.put("message", "Error al realizar la venta: " + e.getMessage());
         }
-        return "redirect:/venta/listar";
+        
+        // Retornar la respuesta como JSON
+        return ResponseEntity.ok(response);
     }
     
-    //metodo para editar la venta
+
     @PutMapping("/editar")
-    public String editarVenta(@RequestParam("id_venta_editar") int id, 
-                                @RequestParam("id_producto_venta") int idProducto,
-                                @RequestParam("cantidad_editar_venta") int cantidad,
-                                @RequestParam("cantidad_editar_total_venta") int totalVenta,
-                                @RequestParam("fecha_editar_venta") LocalDate fecha,
-                                Model model) {
+    @ResponseBody
+    public ResponseEntity<Map<String, Object>> editarVenta(
+            @RequestParam("id_venta_editar") int id, 
+            @RequestParam("id_producto_venta") int idProducto,
+            @RequestParam("cantidad_editar_venta") int cantidad, 
+            @RequestParam("cantidad_editar_total_venta") int totalVenta,
+            @RequestParam("fecha_editar_venta") LocalDate fecha) { 
+    
+        // Crear un mapa para almacenar la respuesta (success/failure y mensaje)
+        Map<String, Object> response = new HashMap<>();
         try {
-            ventaService.actualizar(id, idProducto, cantidad, totalVenta, fecha);
+            // Intentar actualizar la venta con los nuevos datos
+            Venta venta = ventaService.actualizar(id, idProducto, cantidad, totalVenta, fecha);
+            
+            // Comprobar si la venta se actualizó correctamente
+            if (venta == null) {
+                // Si hay error (cantidad insuficiente o producto no encontrado)
+                response.put("success", false);
+                response.put("message", "Error al editar la venta: cantidad insuficiente");
+            } else {
+                // Si la venta se actualizó con éxito
+                response.put("success", true);
+                response.put("message", "Venta editada con éxito.");
+            }
         } catch (Exception e) {
-            model.addAttribute("error", "error al editar la venta: " + e.getMessage());
+            // Capturar cualquier excepción y devolver un mensaje de error
+            response.put("success", false);
+            response.put("message", "Error al editar la venta: " + e.getMessage());
         }
-        return "redirect:/venta/listar";
+        
+        // Retornar la respuesta como JSON
+        return ResponseEntity.ok(response);
     }
+    
+    
 
     @DeleteMapping("/eliminar")
     public String eliminarVenta(@RequestParam("id_eliminar_venta") int id, Model model) {

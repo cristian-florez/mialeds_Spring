@@ -186,8 +186,9 @@ public class VentaService {
                 totalVenta = total;
             }
 
+            
             //verificamos que la cantidad de productos existentes sea suficiente
-            if (producto.getCantidadExistente() < cantidad) {
+            if (producto.getCantidadExistente() < cantidad - venta.getCantidad()) {
                 logger.error("Error al actualizar la venta: cantidad insuficiente");
                 return null;
             }

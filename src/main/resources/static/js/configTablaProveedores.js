@@ -26,7 +26,6 @@ document.addEventListener('DOMContentLoaded', function() {
                 switch (selectedValue) {
                     case 'nuevo_proveedor':
                         selector.style.display = 'none';
-                            modalNuevo.open();
                         break;
 
                     case 'editar_proveedor':

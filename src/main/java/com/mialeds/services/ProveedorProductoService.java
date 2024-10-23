@@ -72,15 +72,17 @@ public class ProveedorProductoService {
 
 
     //metodo que me permite asignar un precio a un producto de un proveedor
-    public void asignarPrecio(int idProducto, int idProveedor, int precio) {
+    public boolean asignarPrecio(int idProducto, int idProveedor, int precio) {
         try {
         // Buscar el registro por producto y proveedor, como desde que se crea el registro se asigna un precio de 0, siempre devolvera un valor
         ProveedorProducto pp = proveedorProductoRepository.encontrarPorProductoYProveedor(idProducto, idProveedor);
         //actualizamos y guardamos el registro
         pp.setPrecioCompraProveedor(precio);
         proveedorProductoRepository.save(pp);
+        return true;
         } catch (Exception e) {
             logger.error("Error al crear el registro: " + e.getMessage());
+            return false;
         }
     }
 }

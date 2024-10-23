@@ -13,7 +13,7 @@
 
     <div th:fragment="header" th:replace="~{fragments/menu :: header}"></div>
 
-    <main class="main">
+    <main class="main" th:if="${admin}">
         <div class="row">
             <div class="col s12 cuadro_botones_proveedores">
                 <div class="col s1"></div>
@@ -69,8 +69,8 @@
                                         </a>
                                         <!-- Menú desplegable para opciones de ajustes -->
                                         <ul id='settings_proveedor' class='dropdown-content'>
-                                            <li><a href="#!" data-value="nuevo_proveedor">
-                                                <i class="material-icons">person_add</i>Nuevo proveedor
+                                            <li><a href="#nuevo_proveedor" class="modal-trigger" data-value="nuevo_proveedor">
+                                                <i class="material-icons">person_add</i>Nuevo proveedor 
                                             </a></li>
                                             <li><a href="#!" data-value="editar_proveedor">
                                                 <i class="material-icons">edit</i>Editar proveedor
@@ -215,32 +215,34 @@
                     <div class="modal-content white">
                         <h5 class="red-text">Registrar precio de compra de proveedores</h5>
                         <form th:action="@{/proveedor/asignarPrecio}" method="POST">
+                            <input type="hidden" name="_method" value="PUT">
                             <div class="col s12">
                                 <div class="input-field col s12 m5 buscador">
-                                    <input type="text" id="buscar_producto" class="autocomplete" >
+                                    <input type="text" id="buscar_producto" class="autocomplete" required>
                                     <label for="buscar_entrada">
                                         Producto
                                     </label>
-                                    <input type="hidden" id="id_producto" name="id_producto_precio">
+                                    <input type="hidden" id="id_producto" name="id_producto_precio" value="0">
                                 </div> 
                                 <div class="input-field col s12 m5 buscador">
-                                    <input type="text" id="buscar_proveedor" class="autocomplete" >
+                                    <input type="text" id="buscar_proveedor" class="autocomplete"  required>
                                     <label for="buscar_entrada">
                                         Proveedor
                                     </label>
-                                    <input type="hidden" id="id_proveedor" name="id_proveedor_precio">
+                                    <input type="hidden" id="id_proveedor" name="id_proveedor_precio" value="0">
                                 </div> 
                                 <div class="input-field col s4 m2">
-                                    <input type="number" id="precio_proveedor" name="precio_proveedor" class="autocomplete " data-position="bottom">
+                                    <input type="number" id="precio_proveedor" name="precio_proveedor" class="autocomplete " data-position="bottom" required>
                                     <label for="precio_proveedor">
                                         precio
                                     </label>
                                 </div>
+                                <div id="errorDivRegistrarPrecio" class="error col s12"></div> <!-- Div para mostrar errores -->
                                 <div class="modal-footer cuadro_botones_2 white">
                                     <!-- Botón para confirmar la eliminación del producto -->
                                     <button type="submit" class="btn waves-effect waves-flat btn-flat green white-text">Asignar</button>
                                     <!-- Enlace para cancelar la eliminación y cerrar el modal -->
-                                    <a href="#!" class="modal-close waves-effect waves-flat btn-flat red white-text">Cancelar</a>
+                                    <a th:href="@{/proveedor/listar}" class="modal-close waves-effect waves-flat btn-flat red white-text">Cerrar</a>
                                 </div>
                             </div>
                         </form>
@@ -289,6 +291,7 @@
     <script th:src="@{/js/configTablaProveedores.js}"></script> <!-- Script personalizado -->
     <script th:src="@{/js/listarProductos.js}"></script>
     <script th:src="@{/js/listarProveedores.js}"></script>
+    <script th:src="@{/js/erroresForm.js}"></script>
 
 
     </body>

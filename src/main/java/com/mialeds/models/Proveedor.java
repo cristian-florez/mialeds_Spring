@@ -1,10 +1,16 @@
 package com.mialeds.models;
 
+import java.util.List;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 @Entity
@@ -27,6 +33,11 @@ public class Proveedor {
 
     @Column(name = "telefono", nullable = false, length = 10)
     private String telefono;
+
+    // Relación uno a muchos con ProveedorProducto
+    @JsonIgnore
+    @OneToMany(mappedBy = "proveedor",  cascade = CascadeType.REMOVE)
+    private List<ProveedorProducto> proveedorProductos;
 
     public Proveedor() {
     }
@@ -84,6 +95,14 @@ public class Proveedor {
 
     public void setTelefono(String telefono) {
         this.telefono = telefono;
+    }
+
+    public List<ProveedorProducto> getProveedorProductos() {
+        return proveedorProductos;
+    }
+
+    public void setProveedorProductos(List<ProveedorProducto> proveedorProductos) {
+        this.proveedorProductos = proveedorProductos;
     }
 
 }

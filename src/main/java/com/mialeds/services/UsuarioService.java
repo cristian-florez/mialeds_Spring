@@ -8,6 +8,8 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.mialeds.models.Role;
+import com.mialeds.models.RoleEnum;
 import com.mialeds.models.Usuario;
 import com.mialeds.repositories.UsuarioRepository;
 
@@ -81,6 +83,15 @@ public class UsuarioService {
         return id;
     }
 
+    //metodo que obtiene la cedula del usuario de la sesion
+    public String obtenerCedulaUsuarioSesion(){
+        //obtenemos la autenticacion del usuario
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        //obtenemos la cedula del usuario y la buscamos en la base de datos, como cada usuario tiene una cedula unica, obtenemos el id del usuario
+        String cedula = authentication.getName();
+        return cedula;
+    }
+
     //metodo que obtiene la informacion del usuario de la sesion
     public Usuario obtenerInformacionUsuario(){
         try{
@@ -93,6 +104,28 @@ public class UsuarioService {
             return null;
         }
     }
+
+    //metodo que obtiene el rol del usuario de la sesion
+    public RoleEnum obtenerRolDelUsuario() {
+        try {
+            // Obtener la información del usuario
+            Usuario usuario = obtenerInformacionUsuario();
+            if (usuario != null && usuario.getRoles() != null && !usuario.getRoles().isEmpty()) {
+                // Acceder al primer rol
+                Role rol = usuario.getRoles().iterator().next(); // Usamos iterator para obtener el primer elemento
+                return rol.getRoleEnum(); // O lo que necesites devolver del rol
+            }
+        } catch (Exception e) {
+            logger.error("Error al obtener el rol del usuario: " + e.getMessage());
+        }
+        return null; // Devuelve null si no se encuentra el rol
+    }
+
+    //metodo para devolver verdadero si el usuario tiene un rol especifico
+    public boolean esAdmin() {
+        return obtenerRolDelUsuario() == RoleEnum.ADMIN;
+    }
+    
 
     //metodo que actualiza cierta informacion del usuario
     public Usuario actualizarUsuario(int id, String nombre, String cedula, String correo, String telefono) {
@@ -136,7 +169,7 @@ public class UsuarioService {
         }
     }
 
-    
+    //metodo que genera una contraseña aleatoria
     public String generarContraseña() {
         String caracteres = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
         String contraseña = "";
