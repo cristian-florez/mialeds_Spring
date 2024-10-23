@@ -18,11 +18,11 @@
         <div class="row">
             <div class="col s12 botones_inventario">
                 <!-- Formulario para buscar productos -->
-                <div class="col s6">
+                <div class="col m6 s12">
                     <!-- El formulario envía una solicitud POST al controlador con el parámetro "menu=inventario" -->
                     <form th:action="@{/inventario/buscar}" method="GET">
                         <!-- Campo de entrada para buscar productos -->
-                        <div class="input-field col s12 m5 buscador">
+                        <div class="input-field col s10  m5 buscador">
                             <!-- Input de texto para la búsqueda de productos -->
                             <input type="text" name="producto">
                             <!-- Label asociado al input -->
@@ -122,7 +122,7 @@
                                     </label>
                                 </div>
                                 <!-- Campo para ingresar la cantidad del producto -->
-                                <div class="input-field col s6 m2">
+                                <div class="input-field col s6  m2">
                                     <input type="number" id="cantidad_movimiento" name="cantidad_movimiento" class="autocomplete" data-position="bottom" required>
                                     <label for="cantidad_movimiento">
                                         Cantidad
@@ -161,14 +161,14 @@
                                     <input type="hidden" name="id_editar">
                                 </div>
                                 <!-- Campo para ingresar el nombre del producto -->
-                                <div class="input-field col s8 m3">
+                                <div class="input-field col s12 m3">
                                     <input type="text" id="nombre_producto_editar" placeholder="nombre" name="nombre_editar" class="autocomplete" required>
                                     <label for="nombre_producto_editar">
                                         Nombre producto
                                     </label>
                                 </div>
                                 <!-- Campo para ingresar la presentación del producto -->
-                                <div class="input-field col s4 m3">
+                                <div class="input-field col s12 m3">
                                     <input type="text" id="presentacion_editar" placeholder="presentacion" name="presentacion_editar" class="autocomplete" required>
                                     <label for="presentacion_editar">
                                         Presentación
@@ -213,14 +213,14 @@
                             <!-- Formulario para registrar un nuevo producto -->
                             <form th:action="@{/inventario/nuevo}" method="POST">
                                 <!-- Campo para ingresar el nombre del nuevo producto -->
-                                <div class="input-field col s8 m3">
+                                <div class="input-field col s12 m3">
                                     <input type="text" id="nombre_producto_nuevo" name="nombre_producto_nuevo" class="autocomplete" required>
                                     <label for="nombre_producto_nuevo">
                                         Nombre producto
                                     </label>
                                 </div>
                                 <!-- Campo para ingresar la presentación del nuevo producto -->
-                                <div class="input-field col s4 m3">
+                                <div class="input-field col s12 m3">
                                     <input type="text" id="presentacion_nuevo" name="presentacion_nuevo" class="autocomplete" required>
                                     <label for="presentacion_nuevo">
                                         Presentación
@@ -365,7 +365,7 @@
                             <!-- Encabezados de las columnas -->
                             <th>Producto</th>
                             <th>Presentación</th>
-                            <th>Precio compra</th>
+                            <th th:if="${admin}">Precio compra</th>
                             <th>Precio venta</th>
                             <th>Cantidad</th>
                             <th th:if="${admin}">
@@ -402,7 +402,7 @@
                             <!-- Muestra los detalles del producto -->
                             <td th:text="${pro.nombre}"></td>
                             <td th:text="${pro.presentacion}"></td>
-                            <td th:text="${pro.precioCompra}"></td>
+                            <td th:text="${pro.precioCompra}" th:if="${admin}"></td>
                             <td th:text="${pro.precioVenta}"></td>
                             <td th:text="${pro.cantidadExistente}"></td>
                             <!-- Columna para acciones relacionadas con el producto -->
