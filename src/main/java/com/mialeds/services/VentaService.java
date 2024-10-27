@@ -119,7 +119,7 @@ public class VentaService {
             int totalVenta = producto.getPrecioVenta() * cantidad;            
 
             //verificamos si ya existe una venta con los mismos parametros, ya que si exite no queremos que se cree una nueva venta si no editar la existente aumentando la cantidad
-            Venta ventaExistente = ventaRepository.findByProductoAndFechaAndUsuario(producto, fecha, usuario);            
+            Venta ventaExistente = ventaRepository.findByProductoAndFecha(producto, fecha);            
 
             //si ya existe una venta con los mismos parametros, se actualiza la venta existente
             if (ventaExistente != null) {

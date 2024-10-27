@@ -24,7 +24,7 @@ function manejoForm(idForm, idErrorDiv, cantidadMensaje) {
                 break;
                 case 2:
                     if (data.success) {
-                        // Si la venta fue exitosa, puedes mostrar un mensaje o recargar la página
+                        //mostrar el mensaje de exito en el div
                         errorDiv.style.color = "green";
                         errorDiv.textContent = data.message;
                         limpiarInputs(form);
@@ -70,6 +70,9 @@ window.addEventListener('load', function() {
         manejoForm('#editar_venta form', 'errorDivEditarProducto', 1);
     } else if(document.querySelector('#olvide_clave form')){
         manejoForm('#olvide_clave form','errorDivOlvidarClave', 2);
-    } else if(this.document.querySelector('#registrar_precio form'))
+    } else if(this.document.querySelector('#registrar_precio form')) {
         manejoForm('#registrar_precio form', 'errorDivRegistrarPrecio', 2);
+    } else if(this.document.querySelector('#cambio_clave form')) {
+        manejoForm('#cambio_clave form', 'errorDivCambiarClave', 1);
+    }
 });

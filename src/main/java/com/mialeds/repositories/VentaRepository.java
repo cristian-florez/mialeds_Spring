@@ -8,7 +8,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
 import com.mialeds.models.Producto;
-import com.mialeds.models.Usuario;
 import com.mialeds.models.Venta;
 
 public interface VentaRepository extends JpaRepository<Venta, Integer> {
@@ -18,7 +17,7 @@ public interface VentaRepository extends JpaRepository<Venta, Integer> {
 
         /*metodo utilizado para que en el servicio verifique si la venta existe con los parametros que indicamos, ya que si es asi no queremos que nos guarde una nueva venta
         sino que actualice la existente */
-        Venta findByProductoAndFechaAndUsuario(Producto Producto, LocalDate fecha,Usuario Usuario);
+        Venta findByProductoAndFecha(Producto Producto, LocalDate fecha);
 
         //metodo utilizado cuando brindamos informacion en la vista del nombre del producto pero no la fecha
         List<Venta> findByProducto_NombreContaining(String nombre);

@@ -143,20 +143,23 @@ public class UsuarioService {
     }
 
     //metodo que cambia la contraseña del usuario iniciado sesion
-    public void cambiarContrasena(int id, String claveVieja, String claveNueva) {
+    public void cambiarContrasena(int id, String claveVieja, String claveNueva) throws IllegalArgumentException {
         try {
             Usuario usuario = buscarPorId(id);
-            //verificamos si la contraseña antigua coincide con la contraseña del usuario
+            // Verificamos si la contraseña antigua coincide con la contraseña del usuario
             if (passwordEncoder.matches(claveVieja, usuario.getContrasena())) {
                 usuario.setContrasena(passwordEncoder.encode(claveNueva));
                 usuarioRepository.save(usuario);
             } else {
-                throw new RuntimeException("La contraseña antigua no coincide");
+                // Lanzamos una excepción específica si la contraseña antigua no coincide
+                throw new IllegalArgumentException("La contraseña antigua no coincide");
             }
         } catch (Exception e) {
             logger.error("Error al cambiar la contraseña: " + e.getMessage());
+            throw e; // Lanza la excepción para que el controlador la maneje
         }
     }
+
 
     //metodo que cambia la contraseña del usuario sin haber iniciado sesion
     public void cambiarContrasena(String cedula, String claveNueva) {

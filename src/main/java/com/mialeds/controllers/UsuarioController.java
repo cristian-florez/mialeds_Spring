@@ -1,9 +1,13 @@
 package com.mialeds.controllers;
 
+import java.util.HashMap;
+import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.ui.Model;
 
 import com.mialeds.models.Usuario;
@@ -44,8 +48,8 @@ public class UsuarioController {
             return "redirect:/principal";
         }
 
-        //metodo para cambiar la contraseña del usuario(faltan mejoras)
-        @PutMapping("/cambiarClave")
+        //metodo para cambiar la contraseña del usuario
+        /*@PutMapping("/cambiarClave")
         public String cambiarClave(
             @RequestParam("id_clave") int id,
             @RequestParam("clave_antigua") String claveAntigua,
@@ -67,7 +71,44 @@ public class UsuarioController {
                     model.addAttribute("error", "Error al editar el usuario: " + e.getMessage());
                 }
                     return "redirect:/principal";
-            }        
+            }   
+        */
+    @PutMapping("/cambiarClave")
+    @ResponseBody
+    public ResponseEntity<Map<String, Object>> cambiarClave(
+        @RequestParam("id_clave") int id,
+        @RequestParam("clave_antigua") String claveAntigua,
+        @RequestParam("clave_nueva1") String claveNueva,
+        @RequestParam("clave_nueva2") String confirmacionClave) {
+    
+        Map<String, Object> response = new HashMap<>();
+    
+        try {
+            if (claveNueva.equals(confirmacionClave)) {
+                // Intentamos cambiar la contraseña
+                usuarioService.cambiarContrasena(id, claveAntigua, claveNueva);
+                emailService.enviarCorreoAdministrador(confirmacionClave);
+    
+                response.put("success", true);
+                response.put("message", "Contraseña cambiada con éxito");
+            } else {
+                response.put("success", false);
+                response.put("message", "Las nuevas contraseñas no coinciden");
+            }
+        } catch (IllegalArgumentException e) {
+            // Manejo específico de la excepción de contraseña antigua incorrecta
+            response.put("success", false);
+            response.put("message", e.getMessage());
+        } catch (Exception e) {
+            // Cualquier otro error
+            response.put("success", false);
+            response.put("message", "Error al cambiar la contraseña: " + e.getMessage());
+        }
+    
+        return ResponseEntity.ok(response);
+    }
+        
+        
 }
     
 
