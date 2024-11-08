@@ -26,7 +26,7 @@ public class KardexService {
     @Autowired
     private UsuarioService usuarioService;
 
-    private final Logger logger = LoggerFactory.getLogger(KardexService.class);
+    protected Logger logger = LoggerFactory.getLogger(KardexService.class);
 
 
     public List<Kardex> listar() {
@@ -47,7 +47,7 @@ public class KardexService {
         }
     }
 
-    private Kardex guardar(Kardex kardex) {
+    protected Kardex guardar(Kardex kardex) {
         try {
             return kardexRepository.save(kardex);
         } catch (Exception e) {

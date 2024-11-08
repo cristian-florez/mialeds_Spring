@@ -77,7 +77,7 @@ public class ProveedorService {
         //creamos una instancia de proveedor usando el constructor que no necesita id
         try {
         Proveedor proveedor = new Proveedor(nombre, nit, correo, numero);
-        this.guardar(proveedor);
+        proveedorRepository.save(proveedor);
         return proveedor;
         } catch (Exception e) {
             logger.error("Error al crear el producto: " + e.getMessage());

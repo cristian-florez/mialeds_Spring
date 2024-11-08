@@ -6,8 +6,11 @@ function manejoForm(idForm, idErrorDiv, cantidadMensaje) {
         const formData = new FormData(form);
         const errorDiv = document.getElementById(idErrorDiv);
 
+        const method = form.querySelector('input[name="_method"]')?.value === 'PUT' ? 'PUT' : 'POST';
+
+
         fetch(form.getAttribute('action'), {
-            method: 'POST',
+            method: method,
             body: formData
         })
         .then(response => response.json())
@@ -64,14 +67,19 @@ function limpiarInputs(form) {
 
 // Ejecutar la función cuando la página termine de cargar
 window.addEventListener('load', function() {
+
     if(document.querySelector('#registrar_venta form')){
         manejoForm('#registrar_venta form', 'errorDivNuevaVenta', 2);
+
     } else if(document.querySelector('#editar_venta form')){
-        manejoForm('#editar_venta form', 'errorDivEditarProducto', 1);
+        manejoForm('#editar_venta form', 'errorDivNuevaVenta', 2);
+
     } else if(document.querySelector('#olvide_clave form')){
         manejoForm('#olvide_clave form','errorDivOlvidarClave', 2);
+
     } else if(this.document.querySelector('#registrar_precio form')) {
         manejoForm('#registrar_precio form', 'errorDivRegistrarPrecio', 2);
+
     } else if(this.document.querySelector('#cambio_clave form')) {
         manejoForm('#cambio_clave form', 'errorDivCambiarClave', 1);
     }

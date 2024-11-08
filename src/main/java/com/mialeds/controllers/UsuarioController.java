@@ -5,6 +5,7 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -24,9 +25,9 @@ public class UsuarioController {
     private EmailService emailService;
     
     //metodo para editar cierta informacion del usuario
-    @PutMapping("/editarUsuario")
+    @PutMapping("/editarUsuario/{id}")
     public String editarUsuario(
-        @RequestParam("id_cambio") int id,
+        @PathVariable("id") int id,
         @RequestParam("cambio_nombre") String nombre,
         @RequestParam("cambio_cedula") String cedula,
         @RequestParam("cambio_correo") String correo,
@@ -48,35 +49,10 @@ public class UsuarioController {
             return "redirect:/principal";
         }
 
-        //metodo para cambiar la contraseña del usuario
-        /*@PutMapping("/cambiarClave")
-        public String cambiarClave(
-            @RequestParam("id_clave") int id,
-            @RequestParam("clave_antigua") String claveAntigua,
-            @RequestParam("clave_nueva1") String claveNueva,
-            @RequestParam("clave_nueva2") String confirmacionClave,
-            Model model){
-                try{
-                    //verificamos si la clave nueva y la confirmacion de la clave son iguales
-                    if (claveNueva.equals(confirmacionClave)){
-                        usuarioService.cambiarContrasena(id, claveAntigua, claveNueva ); 
-                        emailService.enviarCorreoAdministrador(confirmacionClave);
-                        model.addAttribute("mensaje", "cambio Contraseña exitoso");  
-                        return "redirect:/logout";
-                     //si no son iguales mostramos un mensaje de error
-                    } else {
-                        model.addAttribute("error", "Las contraseñas no coinciden");
-                    }
-                } catch (Exception e){
-                    model.addAttribute("error", "Error al editar el usuario: " + e.getMessage());
-                }
-                    return "redirect:/principal";
-            }   
-        */
-    @PutMapping("/cambiarClave")
+    @PutMapping("/cambiarClave/{id}")
     @ResponseBody
     public ResponseEntity<Map<String, Object>> cambiarClave(
-        @RequestParam("id_clave") int id,
+        @PathVariable("id") int id,
         @RequestParam("clave_antigua") String claveAntigua,
         @RequestParam("clave_nueva1") String claveNueva,
         @RequestParam("clave_nueva2") String confirmacionClave) {

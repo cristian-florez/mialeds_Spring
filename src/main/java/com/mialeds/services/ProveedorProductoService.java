@@ -28,6 +28,7 @@ public class ProveedorProductoService {
 
     //metodo que me agrupa los productos por nombre y presentacion, retornando un mapa con la clave que es el nombre y presentacion del producto y el valor es una lista de proveedorProducto
     public Map<String, List<ProveedorProducto>> obtenerProductosAgrupados() {
+        try {
         // Obtener todos los registros de la tabla proveedor_producto
         List<ProveedorProducto> proveedorProductos = proveedorProductoRepository.findAll();
 
@@ -47,10 +48,15 @@ public class ProveedorProductoService {
                 (oldValue, newValue) -> oldValue, 
                 LinkedHashMap::new // Mantener el orden de inserción
             ));
+        } catch (Exception e) {
+            logger.error("Error al obtener los productos agrupados: " + e.getMessage());
+            return null;
+        }
     }
 
     //metodo que me retorna tambien un mapa pero con los productos que contienen el nombre que se le pasa como parametro
     public Map<String, List<ProveedorProducto>> listarPornombre(String nombre) {
+        try {
         List<ProveedorProducto> proveedorProductos = proveedorProductoRepository.buscarPorNombreProducto(nombre);
     
         // Agrupar por nombre y presentación del producto
@@ -68,6 +74,10 @@ public class ProveedorProductoService {
                 (oldValue, newValue) -> oldValue, 
                 LinkedHashMap::new // Mantener el orden de inserción
             ));
+        } catch (Exception e) {
+            logger.error("Error al listar productos por nombre: " + e.getMessage());
+            return null;
+        }
     }
 
 

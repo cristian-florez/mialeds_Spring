@@ -27,7 +27,7 @@ public class ProductoService {
     private ProductoRepository productoRepository;
 
     //se crea una instancia de Logger para poder hacer logs de errores
-    private final Logger logger = LoggerFactory.getLogger(ProductoService.class);
+    protected Logger logger = LoggerFactory.getLogger(ProductoService.class);
 
     //este metodo retorna una lista de productos con cantidad existente menor a 4
     public List<Producto> productosEscasos() {
@@ -105,7 +105,7 @@ public class ProductoService {
         //retornamos el producto actualizado
         return p;
          } catch (Exception e) {
-              logger.error("Error al actualizar el producto: " + e.getMessage());
+              logger.error("Error al actualizar el producto");
         return null;
         }
     }
@@ -115,7 +115,7 @@ public class ProductoService {
         //creamos una instancia de Producto usando el constructor que no necesita id
         try {
         Producto p = new Producto(nombre, presentacion, cantidad, precioCompra, precioVenta);
-        this.guardar(p);
+        productoRepository.save(p);
         return p;
         } catch (Exception e) {
             logger.error("Error al crear el producto: " + e.getMessage());
@@ -145,9 +145,11 @@ public class ProductoService {
             p.setCantidadExistente(p.getCantidadExistente() - cantidad);
         } else if (movimiento.equals("entrada")) {
             p.setCantidadExistente(p.getCantidadExistente() + cantidad);
+        } else {
+            return null;
         }
         //usamos el metodo guardar de esta misma clase para guardar el producto actualizado
-        this.guardar(p);
+        productoRepository.save(p);
         return p;
         } catch (Exception e) {
             logger.error("Error al realizar el movimiento: " + e.getMessage());

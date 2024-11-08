@@ -29,7 +29,7 @@ public class VentaService {
     @Autowired
     private ProductoService productoService;
 
-    private final Logger logger = LoggerFactory.getLogger(VentaService.class);
+    protected Logger logger = LoggerFactory.getLogger(VentaService.class);
 
     //metodo para listar todas las ventas en orden descendente de fecha
     public List<Venta> listar() {
@@ -111,7 +111,7 @@ public class VentaService {
 
             //verificamos que la cantidad de productos existentes sea suficiente
             if (producto.getCantidadExistente() < cantidad) {
-                logger.error("Error al guardar la venta: cantidad insuficiente");
+                logger.error("Error al guardar la venta: cantidad insuficiente".toString());
                 return null;
             }
 

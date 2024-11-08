@@ -99,40 +99,23 @@ public class VentaController extends UsuarioDatosController {
     }
     
 
-    @PutMapping("/editar")
-    @ResponseBody
-    public ResponseEntity<Map<String, Object>> editarVenta(
-            @RequestParam("id_venta_editar") int id, 
-            @RequestParam("id_producto_venta") int idProducto,
-            @RequestParam("cantidad_editar_venta") int cantidad, 
-            @RequestParam("cantidad_editar_total_venta") int totalVenta,
-            @RequestParam("fecha_editar_venta") LocalDate fecha) { 
-    
-        // Crear un mapa para almacenar la respuesta (success/failure y mensaje)
-        Map<String, Object> response = new HashMap<>();
+   //metodo para editar la venta
+   @PutMapping("/editar")
+   public String editarVenta(@RequestParam("id_venta_editar") int id, 
+                               @RequestParam("id_producto_venta") int idProducto,
+                               @RequestParam("cantidad_editar_venta") int cantidad,
+                               @RequestParam("cantidad_editar_total_venta") int totalVenta,
+                               @RequestParam("fecha_editar_venta") LocalDate fecha,
+                               Model model) {
         try {
-            // Intentar actualizar la venta con los nuevos datos
-            Venta venta = ventaService.actualizar(id, idProducto, cantidad, totalVenta, fecha);
-            
-            // Comprobar si la venta se actualizó correctamente
-            if (venta == null) {
-                // Si hay error (cantidad insuficiente o producto no encontrado)
-                response.put("success", false);
-                response.put("message", "Error al editar la venta: cantidad insuficiente");
-            } else {
-                // Si la venta se actualizó con éxito
-                response.put("success", true);
-                response.put("message", "Venta editada con éxito.");
-            }
+            ventaService.actualizar(id, idProducto, cantidad, totalVenta, fecha);
         } catch (Exception e) {
-            // Capturar cualquier excepción y devolver un mensaje de error
-            response.put("success", false);
-            response.put("message", "Error al editar la venta: " + e.getMessage());
+            model.addAttribute("error", "error al editar la venta: " + e.getMessage());
         }
-        
-        // Retornar la respuesta como JSON
-        return ResponseEntity.ok(response);
+        return "redirect:/venta/listar";
     }
+
+
     
     
 

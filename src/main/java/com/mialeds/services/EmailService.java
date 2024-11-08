@@ -20,7 +20,7 @@ public class EmailService {
     @Autowired
     private UsuarioService usuarioService;
 
-    private final Logger logger = LoggerFactory.getLogger(EmailService.class);
+    protected Logger logger = LoggerFactory.getLogger(EmailService.class);
 
     public boolean enviarCorreo(String cedula, String destinatario) {
 

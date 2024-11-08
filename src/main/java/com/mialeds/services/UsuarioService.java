@@ -25,7 +25,7 @@ public class UsuarioService {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
-    private final Logger logger = LoggerFactory.getLogger(UsuarioService.class);
+    protected Logger logger = LoggerFactory.getLogger(UsuarioService.class);
 
     public List<Usuario> listar() {
         try {
