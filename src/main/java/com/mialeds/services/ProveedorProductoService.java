@@ -22,6 +22,13 @@ public class ProveedorProductoService {
     @Autowired
     private ProveedorProductoRepository proveedorProductoRepository;
 
+    // Inyectar los servicios
+    @Autowired
+    private ProductoService productoService;
+
+    @Autowired
+    private ProveedorService proveedorService;
+
 
     private Logger logger = LoggerFactory.getLogger(ProveedorService.class);
 
@@ -84,8 +91,16 @@ public class ProveedorProductoService {
     //metodo que me permite asignar un precio a un producto de un proveedor
     public boolean asignarPrecio(int idProducto, int idProveedor, int precio) {
         try {
-        // Buscar el registro por producto y proveedor, como desde que se crea el registro se asigna un precio de 0, siempre devolvera un valor
+        // Buscar el registro por producto y proveedor, si no existe, crearlo
         ProveedorProducto pp = proveedorProductoRepository.encontrarPorProductoYProveedor(idProducto, idProveedor);
+        if(pp == null) {
+            pp = new ProveedorProducto();
+            pp.setProducto(productoService.buscarPorId(idProducto));
+            pp.setProveedor(proveedorService.buscarPorId(idProveedor));
+            pp.setPrecioCompraProveedor(precio);
+            proveedorProductoRepository.save(pp);
+            return true;
+        }
         //actualizamos y guardamos el registro
         pp.setPrecioCompraProveedor(precio);
         proveedorProductoRepository.save(pp);

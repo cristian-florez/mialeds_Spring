@@ -54,14 +54,14 @@
                         <form th:action="@{/venta/nuevo}" method="POST">
                             <div class="col s12">
                                 <div class="input-field col s12 m6 buscador">
-                                    <input type="text" id="buscar_producto" class="autocomplete" required>
+                                    <input type="text" id="buscar_producto" class="autocomplete" autocomplete="off" required>
                                     <label for="buscar_entrada">
                                         Producto
                                     </label>
                                     <input type="hidden" id="id_producto" name="id_producto_venta">
                                 </div> 
                                 <div class="input-field col s6 m2">
-                                    <input type="number" id="cantidad_entrada_venta" name="cantidad_entrada_venta" class="autocomplete " data-position="bottom" required>
+                                    <input type="number" id="cantidad_entrada_venta" name="cantidad_entrada_venta" class="autocomplete " data-position="bottom" autocomplete="off" required>
                                     <label for="cantidad_entrada">
                                         cantidad
                                     </label>

@@ -5,7 +5,7 @@ $(document).ready(function() {
 
     // Solicitud AJAX para obtener la lista de productos del servidor
     $.ajax({
-        url: 'http://localhost:8080/api/producto/listar', // URL del servidor para obtener los productos
+        url: '/api/producto/listar', // URL del servidor para obtener los productos
         type: 'GET', // Tipo de solicitud para obtener datos
         success: function(response) {
             let productos = {}; // Objeto para el autocompletado

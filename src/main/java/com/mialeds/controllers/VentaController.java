@@ -33,7 +33,7 @@ public class VentaController extends UsuarioDatosController {
     @GetMapping("/listar")
     public String listar(Model model) {
         try {   //se obtienen las ventas, se suman las ventas y se formatea el total de ventas
-                List<Venta> ventas = ventaService.listar();
+                List<Venta> ventas = ventaService.listarPorFecha(LocalDate.now());
                 String totalVentasFormateado = ventaService.formatearTotalVentas(ventas);
 
             model.addAttribute("ventas", ventas);

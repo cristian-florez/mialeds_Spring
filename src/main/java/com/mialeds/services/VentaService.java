@@ -80,7 +80,7 @@ public class VentaService {
         } else if (fecha != null) {
             return listarPorFecha(fecha);
         } else {
-            return listar();
+            return listarPorFecha(LocalDate.now());
         }
     }
 

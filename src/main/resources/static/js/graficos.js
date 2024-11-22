@@ -3,7 +3,7 @@
 $(document).ready(function() {
     // Solicitud AJAX para obtener la lista de productos más vendidos del servidor
     $.ajax({
-        url: 'http://localhost:8080/api/grafico/ProductosMasVendidos', // URL del servidor para obtener los productos
+        url: '/api/grafico/ProductosMasVendidos', // URL del servidor para obtener los productos
         type: 'GET', // Tipo de solicitud para obtener datos
         success: function(response) {
             let nombresCompletos = []; // Array para almacenar los nombres completos (nombre + presentación)
@@ -29,7 +29,7 @@ $(document).ready(function() {
         }
     });
     $.ajax({
-        url: 'http://localhost:8080/api/grafico/ProductosMenosVendidos', // URL del servidor para obtener los productos
+        url: '/api/grafico/ProductosMenosVendidos', // URL del servidor para obtener los productos
         type: 'GET', // Tipo de solicitud para obtener datos
         success: function(response) {
             let nombresCompletos = []; // Array para almacenar los nombres completos (nombre + presentación)
@@ -55,7 +55,7 @@ $(document).ready(function() {
         }
     });
     $.ajax({
-        url: 'http://localhost:8080/api/grafico/VentasUltimos30Dias', // URL del servidor para obtener los productos
+        url: '/api/grafico/VentasUltimos30Dias', // URL del servidor para obtener los productos
         type: 'GET', // Tipo de solicitud para obtener datos
         success: function(response) {
             let fechas = []; // Array para almacenar los nombres completos (nombre + presentación)
@@ -79,7 +79,7 @@ $(document).ready(function() {
         }
     });
     $.ajax({
-        url: 'http://localhost:8080/api/grafico/GananciasUltimos30Dias', // URL del servidor para obtener los productos
+        url: '/api/grafico/GananciasUltimos30Dias', // URL del servidor para obtener los productos
         type: 'GET', // Tipo de solicitud para obtener datos
         success: function(response) {
             let fechas = []; // Array para almacenar los nombres completos (nombre + presentación)
