@@ -1,4 +1,4 @@
-package com.mialeds.config;
+package com.mialeds.Config;
 
 import java.util.Properties;
 

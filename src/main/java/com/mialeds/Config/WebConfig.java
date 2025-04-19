@@ -1,4 +1,4 @@
-package com.mialeds.config;
+package com.mialeds.Config;
 
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;

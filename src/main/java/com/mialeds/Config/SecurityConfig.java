@@ -1,4 +1,4 @@
-package com.mialeds.config;
+package com.mialeds.Config;
 
 // Importamos las clases necesarias para configurar la seguridad de la aplicación
 import org.springframework.security.config.http.SessionCreationPolicy;

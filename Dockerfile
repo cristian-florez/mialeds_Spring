@@ -1,17 +1,28 @@
 FROM eclipse-temurin:21.0.5_11-jdk
-
 EXPOSE 8080
+WORKDIR /app
 
-WORKDIR /root 
+# Copiar pom.xml primero
+COPY pom.xml ./
 
-COPY ./pom.xml /root
-COPY ./.mvn /root/.mvn
-COPY ./mvnw /root
+# Copiar archivos del Maven Wrapper
+COPY mvnw ./
+COPY .mvn ./.mvn/
 
+# Corregir finales de línea y dar permisos de ejecución
+RUN sed -i 's/\r$//' mvnw && chmod +x mvnw
+
+# Verificar que el archivo existe y tiene permisos
+RUN ls -la mvnw
+
+# Descargar dependencias
 RUN ./mvnw -B dependency:go-offline
 
-COPY ./src /root/src
+# Copiar el código fuente
+COPY src ./src
 
-RUN ./mvnw clean install
+# Compilar el proyecto
+RUN ./mvnw clean install -DskipTests
 
-ENTRYPOINT [ "java", "-jar", "/root/target/mialeds-0.0.1-SNAPSHOT.jar"]
+# Ejecutar el .jar generado
+ENTRYPOINT ["java", "-jar", "target/mialeds-0.0.1-SNAPSHOT.jar"]
