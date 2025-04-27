@@ -1,6 +1,7 @@
 package com.mialeds.services;
 
 import java.util.List;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -8,6 +9,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.mialeds.models.PermisosRoles;
 import com.mialeds.models.Role;
 import com.mialeds.models.RoleEnum;
 import com.mialeds.models.Usuario;
@@ -41,6 +43,43 @@ public class UsuarioService {
             return usuarioRepository.findById(id).orElse(null);
         } catch (Exception e) {
             logger.error("Error al buscar el usuario: " + e.getMessage());
+            return null;
+        }
+    }
+    //este metodo inicializa los roles de los usuarios
+    public Role role(String role) {
+        try {
+            Role rol = null;
+            PermisosRoles PermisoCrear = PermisosRoles.builder()
+                    .nombrePermiso("CREATE")
+                    .build();
+
+            PermisosRoles permisoLeer = PermisosRoles.builder()
+                    .nombrePermiso("READ")
+                    .build();
+
+            PermisosRoles permisoActualizar = PermisosRoles.builder()
+                    .nombrePermiso("UPDATE")
+                    .build();
+
+            PermisosRoles permisoEliminar = PermisosRoles.builder()
+                    .nombrePermiso("DELETE")
+                    .build();
+
+            if (role == "ADMIN") {
+                    rol = Role.builder()
+                    .roleEnum(RoleEnum.ADMIN)
+                    .permisoList(Set.of(PermisoCrear, permisoLeer, permisoActualizar, permisoEliminar))
+                    .build();
+            } else {
+                rol = Role.builder()
+                .roleEnum(RoleEnum.USER)
+                .permisoList(Set.of(PermisoCrear, permisoLeer))
+                .build();
+            }
+            return rol;
+        } catch (Exception e) {
+            logger.error("Error al crear el rol: " + e.getMessage());
             return null;
         }
     }
