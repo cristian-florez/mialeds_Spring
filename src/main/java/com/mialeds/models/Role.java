@@ -1,8 +1,5 @@
 package com.mialeds.models;
 
-import java.util.HashSet;
-import java.util.Set;
-
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -12,7 +9,7 @@ import lombok.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "roles")
+@Table(name = "role")
 public class Role {
 
     @Id
@@ -23,9 +20,4 @@ public class Role {
     @Enumerated(EnumType.STRING)
     @Column(name = "nombre")
     private RoleEnum roleEnum;
-
-    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    @JoinTable(name = "permisos_roles", joinColumns = @JoinColumn(name = "role_id"), inverseJoinColumns = @JoinColumn(name = "permiso_id"))
-    @Builder.Default
-    private Set<PermisosRoles> permisoList = new HashSet<>();
 }

@@ -6,7 +6,6 @@ import static org.mockito.Mockito.*;
 import com.mialeds.models.Usuario;
 import com.mialeds.models.Role;
 import com.mialeds.models.RoleEnum;
-import com.mialeds.models.PermisosRoles;
 import com.mialeds.repositories.UsuarioRepository;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -17,10 +16,7 @@ import org.mockito.MockitoAnnotations;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+
 
 class UserDetailsServiceImplTest {
 
@@ -49,17 +45,6 @@ class UserDetailsServiceImplTest {
         // Configura los roles y permisos del usuario
         Role role = new Role();
         role.setRoleEnum(RoleEnum.USER);
-        
-        PermisosRoles permiso = new PermisosRoles();
-        permiso.setNombrePermiso("READ");
-        
-        List<PermisosRoles> permisos = new ArrayList<>();
-        permisos.add(permiso);
-        role.setPermisoList(new HashSet<>(permisos));
-
-        Set<Role> roles = new HashSet<>();
-        roles.add(role);
-        usuario.setRoles(roles);
 
         when(usuarioRepository.findByCedulaQuery("123456789")).thenReturn(usuario);
 

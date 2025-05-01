@@ -9,7 +9,6 @@ import com.mialeds.models.Usuario;
 import com.mialeds.services.UsuarioService;
 
 import java.util.Objects;
-import java.util.Set;
 
 
 @SpringBootApplication
@@ -34,7 +33,7 @@ public class MialedsApplication {
                     .accountNoExpired(true)
                     .accountNoLocked(true)
                     .credentialNoExpired(true)
-                    .roles(Set.of(usuarioService.role("ADMIN")))
+                    .role(usuarioService.role("ADMIN"))
                     .build();
 
 					Usuario user = Usuario.builder()
@@ -47,7 +46,7 @@ public class MialedsApplication {
                     .accountNoExpired(true)
                     .accountNoLocked(true)
                     .credentialNoExpired(true)
-                    .roles(Set.of(usuarioService.role("USER")))
+                    .role(usuarioService.role("USER"))
                     .build();
 
 					Usuario admin1 = usuarioService.buscarUsuarioAutenticacion(userAdmin.getCedula());

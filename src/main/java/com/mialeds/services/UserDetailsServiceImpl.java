@@ -36,13 +36,9 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         List<SimpleGrantedAuthority> authorityList = new ArrayList<>();
 
         // Añadimos los roles del usuario a la lista de autoridades
-        usuario.getRoles()
-            .forEach(role -> authorityList.add(new SimpleGrantedAuthority("ROLE_".concat(role.getRoleEnum().name()))));
-        
-        // Añadimos los permisos del usuario a la lista de autoridades
-        usuario.getRoles().stream()
-            .flatMap(role -> role.getPermisoList().stream())
-            .forEach(permiso -> authorityList.add(new SimpleGrantedAuthority(permiso.getNombrePermiso())));
+        if (usuario.getRole() != null){
+            authorityList.add(new SimpleGrantedAuthority("ROLE_" + usuario.getRole().getRoleEnum().name()));
+        }
 
         // Retornamos un objeto User con la información del usuario y sus autoridades
         return new User(usuario.getCedula(), // Nombre de usuario

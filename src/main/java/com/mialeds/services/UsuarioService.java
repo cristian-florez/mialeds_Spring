@@ -1,7 +1,6 @@
 package com.mialeds.services;
 
 import java.util.List;
-import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -9,10 +8,10 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import com.mialeds.models.PermisosRoles;
 import com.mialeds.models.Role;
 import com.mialeds.models.RoleEnum;
 import com.mialeds.models.Usuario;
+import com.mialeds.repositories.RoleRepository;
 import com.mialeds.repositories.UsuarioRepository;
 
 import org.slf4j.Logger;
@@ -23,6 +22,9 @@ public class UsuarioService {
 
     @Autowired
     private UsuarioRepository usuarioRepository;
+
+    @Autowired
+    private RoleRepository roleRepository;
 
     @Autowired
     private PasswordEncoder passwordEncoder;
@@ -46,40 +48,20 @@ public class UsuarioService {
             return null;
         }
     }
-    //este metodo inicializa los roles de los usuarios
     public Role role(String role) {
         try {
-            Role rol = null;
-            PermisosRoles PermisoCrear = PermisosRoles.builder()
-                    .nombrePermiso("CREATE")
-                    .build();
-
-            PermisosRoles permisoLeer = PermisosRoles.builder()
-                    .nombrePermiso("READ")
-                    .build();
-
-            PermisosRoles permisoActualizar = PermisosRoles.builder()
-                    .nombrePermiso("UPDATE")
-                    .build();
-
-            PermisosRoles permisoEliminar = PermisosRoles.builder()
-                    .nombrePermiso("DELETE")
-                    .build();
-
-            if (role == "ADMIN") {
-                    rol = Role.builder()
-                    .roleEnum(RoleEnum.ADMIN)
-                    .permisoList(Set.of(PermisoCrear, permisoLeer, permisoActualizar, permisoEliminar))
-                    .build();
-            } else {
-                rol = Role.builder()
-                .roleEnum(RoleEnum.USER)
-                .permisoList(Set.of(PermisoCrear, permisoLeer))
-                .build();
-            }
-            return rol;
+            RoleEnum roleEnum = RoleEnum.valueOf(role); // Convierte el String a Enum
+    
+            // Busca en la base de datos si ya existe
+            return roleRepository.findByRoleEnum(roleEnum)
+                    .orElseGet(() -> {
+                        // Si no existe, lo crea
+                        Role nuevoRol = Role.builder().roleEnum(roleEnum).build();
+                        return roleRepository.save(nuevoRol);
+                    });
+    
         } catch (Exception e) {
-            logger.error("Error al crear el rol: " + e.getMessage());
+            logger.error("Error al obtener o crear el rol: " + e.getMessage());
             return null;
         }
     }
@@ -149,9 +131,8 @@ public class UsuarioService {
         try {
             // Obtener la información del usuario
             Usuario usuario = obtenerInformacionUsuario();
-            if (usuario != null && usuario.getRoles() != null && !usuario.getRoles().isEmpty()) {
-                // Acceder al primer rol
-                Role rol = usuario.getRoles().iterator().next(); // Usamos iterator para obtener el primer elemento
+            if (usuario != null && usuario.getRole() != null) {
+                Role rol = usuario.getRole();
                 return rol.getRoleEnum(); // O lo que necesites devolver del rol
             }
         } catch (Exception e) {

@@ -2,7 +2,6 @@ package com.mialeds.controllers;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -111,7 +110,7 @@ public class UsuarioController {
                     .accountNoExpired(true)
                     .accountNoLocked(true)
                     .credentialNoExpired(true)
-                    .roles(Set.of(usuarioService.role(role)))
+                    .role(usuarioService.role(role))
                     .build();
 
                     usuarioService.crearUsuario(user);

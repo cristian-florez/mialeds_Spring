@@ -1,8 +1,6 @@
 package com.mialeds.models;
 
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 import jakarta.persistence.*;
 import lombok.*;
@@ -51,10 +49,10 @@ public class Usuario {
     @OneToMany(mappedBy = "usuario")
     private List<Kardex> kardexes;
 
-    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    @JoinTable(name = "usuario_roles", joinColumns = @JoinColumn(name = "usuario_id"), inverseJoinColumns = @JoinColumn(name = "id_role"))
-    @Builder.Default
-    private Set<Role> roles = new HashSet<>();
+    @ManyToOne
+    @JoinColumn(name = "id_role")
+    private Role role;
+    
 
     
 }

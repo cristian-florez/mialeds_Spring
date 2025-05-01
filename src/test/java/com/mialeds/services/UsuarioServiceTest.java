@@ -22,7 +22,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.core.Authentication;
 
 
-import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -268,7 +267,7 @@ class UsuarioServiceTest {
         Usuario usuario = new Usuario();
         Role role = new Role();
         role.setRoleEnum(RoleEnum.ADMIN);
-        usuario.setRoles(Collections.singleton(role));
+        usuario.setRole(role);
     
         // Configura el método `obtenerInformacionUsuario` para devolver el usuario con el rol ADMIN
         UsuarioService spyUsuarioService = spy(usuarioService);
@@ -304,7 +303,7 @@ class UsuarioServiceTest {
         Usuario usuario = new Usuario();
         Role role = new Role();
         role.setRoleEnum(RoleEnum.ADMIN);
-        usuario.setRoles(Collections.singleton(role));
+        usuario.setRole(role);
     
         // Configura un spy en `usuarioService` para simular `obtenerInformacionUsuario`
         UsuarioService spyUsuarioService = spy(usuarioService);
