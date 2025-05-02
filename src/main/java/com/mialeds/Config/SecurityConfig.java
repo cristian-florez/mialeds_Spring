@@ -45,12 +45,14 @@ public class SecurityConfig {
                 .authorizeHttpRequests(http -> {
                     // Definimos qué solicitudes HTTP son públicas y cuáles requieren autenticación
                     http.requestMatchers("/login").permitAll(); 
+                    http.requestMatchers("/crearUsuario").permitAll();
                     http.requestMatchers("/restaurarClave").permitAll();
                     http.requestMatchers("/css/**").permitAll();
                     http.requestMatchers("/js/**").permitAll(); 
                     http.requestMatchers("/images/**").permitAll();
                     
                     // Aquí definimos las rutas que requieren autenticación
+                    http.requestMatchers("/usuario/crearUsuario").hasRole("ADMIN");
                     http.requestMatchers("/inventario/editar").hasRole("ADMIN");
                     http.requestMatchers("/inventario/nuevo").hasRole("ADMIN");
                     http.requestMatchers("/inventario/eliminar").hasRole("ADMIN");
