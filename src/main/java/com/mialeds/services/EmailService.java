@@ -71,7 +71,7 @@ public class EmailService {
         
             // Configuramos el mensaje de correo
             mensaje.setFrom("mialeds06@gmail.com");
-            mensaje.setTo("mialeds06@gmail.com");
+            mensaje.setTo("quirogaeds2023@gmail.com");
             mensaje.setSubject("Deteccion cambio de contraseña");
             mensaje.setText("Estimado Administrador,\n\n" +
                             "Se ha realizado un cambio de contraseña para el usuario:\n" +
