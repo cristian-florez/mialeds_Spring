@@ -50,13 +50,17 @@ public class SecurityConfig {
                     http.requestMatchers("/css/**").permitAll();
                     http.requestMatchers("/js/**").permitAll(); 
                     http.requestMatchers("/images/**").permitAll();
+                    http.requestMatchers("/inventario/movimiento").hasRole("USER");
+                    http.requestMatchers("/usuario/editarUsuario/**").hasRole("USER");
+                    http.requestMatchers("/usuario//cambiarClave/**").hasRole("USER");
+
+                    
                     
                     // Aquí definimos las rutas que requieren autenticación
                     http.requestMatchers("/usuario/crearUsuario").hasRole("ADMIN");
                     http.requestMatchers("/inventario/editar").hasRole("ADMIN");
                     http.requestMatchers("/inventario/nuevo").hasRole("ADMIN");
                     http.requestMatchers("/inventario/eliminar").hasRole("ADMIN");
-                    http.requestMatchers("/inventario/movimiento").hasRole("ADMIN");
                     http.requestMatchers("/venta/editar").hasRole("ADMIN");
                     http.requestMatchers("/venta/eliminar").hasRole("ADMIN");
                     http.requestMatchers("/proveedor/**").hasRole("ADMIN");

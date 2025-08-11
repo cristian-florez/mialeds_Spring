@@ -81,7 +81,7 @@
  <div class="modal-content configuracion_perfil">
      <div class="container">
          <div class="row">
-            <form class="col s12" th:action="@{'/editarUsuario/' + ${usuario.idUsuario}}" method="post">
+            <form class="col s12" th:action="@{'usuario/editarUsuario/' + ${usuario.idUsuario}}" method="post">
                 <!-- Campo oculto para emular el método PUT -->
                 <input type="hidden" name="_method" value="PUT">
             
@@ -137,7 +137,7 @@
     <div class="modal-content configuracion_perfil">
         <div class="container">
             <div class="row">
-                <form class="col s12" th:action="@{'/cambiarClave/' + ${usuario.idUsuario}}"  method="post">
+                <form class="col s12" th:action="@{'usuario/cambiarClave/' + ${usuario.idUsuario}}"  method="post">
                     <!-- Campo oculto para emular el método PUT -->
                     <input type="hidden" name="_method" value="PUT">
                     <div class="row">

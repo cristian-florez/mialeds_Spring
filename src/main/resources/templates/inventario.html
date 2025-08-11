@@ -78,18 +78,18 @@
                     </div>
                 </div>
                 <!--ingreso, salida y nuevos productos-->
-                <div class="col s5 m2 cuadro_botones_opciones" th:if="${admin}">
+                <div class="col s5 m2 cuadro_botones_opciones">
                     <div class="col s12">
                         <a class="btn modal-trigger red crud" href="#buscar_entradas">
                             registro entradas
                         </a>   
                     </div>
-                    <div class="col s12">
+                    <div class="col s12"  th:if="${admin}">
                         <a class="btn modal-trigger red crud" href="#buscar_salidas">
                             registro salidas
                         </a>
                     </div>
-                    <div class="col s12">
+                    <div class="col s12"  th:if="${admin}">
                         <a class="btn modal-trigger red crud" href="#producto_nuevo">
                             nuevo producto
                         </a>
@@ -98,7 +98,7 @@
                     </div>
                 </div>
                 <!-- Modal para registrar movimiento de productos -->
-                <div id="registrar_movimiento" class="modal center-align" th:if="${admin}">
+                <div id="registrar_movimiento" class="modal center-align">
                     <!-- Contenido del modal -->
                     <div class="modal-content">
                         <!-- Título del modal en color rojo -->
@@ -123,7 +123,7 @@
                                 </div>
                                 <!-- Campo para ingresar la cantidad del producto -->
                                 <div class="input-field col s6  m2">
-                                    <input type="number" id="cantidad_movimiento" name="cantidad_movimiento" class="autocomplete" data-position="bottom" required>
+                                    <input type="number" id="cantidad_movimiento" min="0" name="cantidad_movimiento" class="autocomplete" data-position="bottom" required>
                                     <label for="cantidad_movimiento">
                                         Cantidad
                                     </label>
@@ -368,7 +368,7 @@
                             <th th:if="${admin}">Precio compra</th>
                             <th>Precio venta</th>
                             <th>Cantidad</th>
-                            <th th:if="${admin}">
+                            <th>
                                 <!-- Botón de ajustes de inventario con un menú desplegable -->
                                 <a class="dropdown-trigger btn tooltipped red-text boton_ajustes" 
                                    data-position="bottom" 
@@ -379,16 +379,16 @@
                                 </a>
                                 <!-- Menú desplegable para opciones de ajustes -->
                                 <ul id='settings' class='dropdown-content'>
-                                    <li><a href="#!" data-value="editar">
+                                    <li><a href="#!" data-value="editar" th:if="${admin}">
                                         <i class="material-icons">edit</i>Editar producto
                                     </a></li>
-                                    <li><a href="#!" data-value="eliminar">
+                                    <li><a href="#!" data-value="eliminar" th:if="${admin}">
                                         <i class="material-icons">delete</i>Eliminar producto
                                     </a></li>
                                     <li><a href="#!" data-value="entrada">
                                         <i class="material-icons">exposure_plus_1</i>Entrada producto
                                     </a></li>
-                                    <li><a href="#!" data-value="salida">
+                                    <li><a href="#!" data-value="salida" th:if="${admin}">
                                         <i class="material-icons">remove</i>Salida producto
                                     </a></li>
                                 </ul>
@@ -406,7 +406,7 @@
                             <td th:text="${pro.precioVenta}"></td>
                             <td th:text="${pro.cantidadExistente}"></td>
                             <!-- Columna para acciones relacionadas con el producto -->
-                            <td th:if="${admin}">
+                            <td>
                                 <!-- Enlace de opción con datos del producto (se muestra u oculta según sea necesario) -->
                                 <a class="btn red-text white opciones" 
                                    id="selector" 
